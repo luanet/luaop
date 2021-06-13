@@ -1,7 +1,7 @@
 import { blockSubscribe, blockUnsubscribe } from '@api/block';
 import { tokenMap, actionTypes } from '@constants';
 import {
-  olderBlocksRetrieved,
+  latestBlocksRetrieved,
   forgersRetrieved,
   networkStatusUpdated,
 } from '@actions';
@@ -54,10 +54,10 @@ const blockMiddleware = store => (
     next(action);
     switch (action.type) {
       case actionTypes.networkConfigSet:
-        store.dispatch(olderBlocksRetrieved());
+        store.dispatch(latestBlocksRetrieved());
         blockListener(store);
         break;
-      case actionTypes.olderBlocksRetrieved:
+      case actionTypes.latestBlocksRetrieved:
         store.dispatch(forgersRetrieved());
         break;
 

@@ -1,4 +1,4 @@
-import { olderBlocksRetrieved } from '@actions';
+import { latestBlocksRetrieved } from '@actions';
 import { actionTypes } from '@constants';
 import { blockSubscribe, blockUnsubscribe } from '@api/block';
 import middleware from './block';
@@ -27,6 +27,6 @@ describe('Block middleware', () => {
 
     expect(blockSubscribe).toHaveBeenCalledTimes(1);
     expect(blockUnsubscribe).toHaveBeenCalledTimes(1);
-    expect(olderBlocksRetrieved).toHaveBeenCalledTimes(1);
+    expect(latestBlocksRetrieved).toHaveBeenCalledTimes(1);
   });
 });

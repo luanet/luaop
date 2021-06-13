@@ -17,7 +17,7 @@ const blocks = (state = initialState, action) => {
           ...state.latestBlocks,
         ].slice(0, ROUND_LENGTH * 2),
       };
-    case actionTypes.olderBlocksRetrieved:
+    case actionTypes.latestBlocksRetrieved:
       return {
         ...state,
         latestBlocks: [

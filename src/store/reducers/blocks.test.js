@@ -29,13 +29,13 @@ describe('Reducer: blocks(state, action)', () => {
     });
   });
 
-  it('should action.blocks to state.latestBlocks if action.type = actionTypes.olderBlocksRetrieved', () => {
+  it('should action.blocks to state.latestBlocks if action.type = actionTypes.latestBlocksRetrieved', () => {
     const state = {
       latestBlocks: [blocks[0]],
     };
 
     const action = {
-      type: actionTypes.olderBlocksRetrieved,
+      type: actionTypes.latestBlocksRetrieved,
       data: {
         list: blocks,
         total: 1000,

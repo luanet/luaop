@@ -34,7 +34,7 @@ const actionTypes = {
   networkStatusUpdated: 'NETWORK_STATUS_UPDATED',
   lastBtcUpdateSet: 'NETWORK_LAST_BTC_UPDATE_SET',
   newBlockCreated: 'NEW_BLOCK_CREATED',
-  olderBlocksRetrieved: 'OLDER_BLOCKS_RETRIEVED',
+  latestBlocksRetrieved: 'LATEST_BLOCKS_RETRIEVED',
   passphraseUsed: 'PASSPHRASE_USED',
   pricesRetrieved: 'PRICES_RETRIEVED',
   removePassphrase: 'REMOVE_PASSPHRASE',
