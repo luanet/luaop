@@ -1,46 +1,25 @@
 import { actionTypes, ROUND_LENGTH } from '@constants';
-import { convertUnixSecondsToLiskEpochSeconds } from '@utils/datetime';
 import { getBlocks } from '@api/block';
 import { getForgers } from '@api/delegate';
 
 /**
- * Retrieves latest blocks from Lisk Service.
- * The iteration of time conversion can be merged
- * into reducer to reduce the big-O factor
+ * Retrieves the latest blocks on the blockchain
+ * The block info will be used to calculate delegate
+ * forging time and status.
  *
- * @param {Object} params - API query parameters
- * @param {Object} network - Network configuration for mainnet/testnet/devnet
- * @returns {Array} - the list of blocks
+ * @returns {Promise}
  */
-const loadLastBlocks = async (params, network) => {
-  const blocks = await getBlocks({ network, params });
-  const total = blocks.meta.total;
-  return {
-    total,
-    list: blocks.data.map(block => ({
-      ...block,
-      timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
-    })),
-  };
-};
-
-export const olderBlocksRetrieved = () => async (dispatch, getState) => {
+export const latestBlocksRetrieved = () => async (dispatch, getState) => {
   const blocksFetchLimit = 100;
   const { network } = getState();
 
-  const batch1 = await loadLastBlocks({ limit: blocksFetchLimit }, network);
-  const batch2 = await loadLastBlocks({
-    offset: blocksFetchLimit, limit: blocksFetchLimit,
-  }, network);
+  const blocks = await getBlocks({ network, params: { limit: blocksFetchLimit } });
 
   return dispatch({
-    type: actionTypes.olderBlocksRetrieved,
+    type: actionTypes.latestBlocksRetrieved,
     data: {
-      list: [
-        ...batch1.list,
-        ...batch2.list,
-      ],
-      total: batch1.total,
+      list: blocks.data,
+      total: blocks.meta.total,
     },
   });
 };
