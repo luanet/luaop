@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './StoryWrapper.css';
 import ThemeContext from '../../../src/contexts/theme';
+import '../../../src/app/app.css';
+import '../../../src/app/variables.css';
 
 const StoryWrapper = ({ className, children, ...props }) =>
   <ThemeContext.Provider value="light"><div className={`${className} ${styles.wrapper}`} {...props}>{children}</div></ThemeContext.Provider>;
