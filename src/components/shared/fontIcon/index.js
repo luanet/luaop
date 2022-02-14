@@ -2,7 +2,7 @@ import React from 'react';
 import style from './fontIcon.css';
 
 /**
- * open http://localhost:8080/assets/fonts/Iconfont/icons.html in browser to see list of icons
+ * open http://localhost:8081/assets/fonts/Iconfont/icons.html in browser to see list of icons
  */
 const FontIcon = ({
   children, className, value, ...other

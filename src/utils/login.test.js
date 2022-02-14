@@ -6,14 +6,14 @@ describe('Login', () => {
     it('should add http if needed', () => {
       expect(addHttp('example.com')).toEqual('https://example.com');
       expect(addHttp('http://example.com')).toEqual('http://example.com');
-      expect(addHttp('192.168.0.0:8080')).toEqual('http://192.168.0.0:8080');
+      expect(addHttp('192.168.0.0:8081')).toEqual('http://192.168.0.0:8081');
       expect(addHttp('192.168.0.0')).toEqual('http://192.168.0.0');
     });
   });
 
   describe('validateUrl', () => {
     it('should set address and addressValidity="" for a valid address', () => {
-      const validURL = 'http://localhost:8080';
+      const validURL = 'http://localhost:8081';
       const data = validateUrl(validURL);
       const expectedData = {
         address: validURL,
@@ -23,7 +23,7 @@ describe('Login', () => {
     });
 
     it('should set address and addressValidity correctly event without http', () => {
-      const validURL = '127.0.0.1:8080';
+      const validURL = '127.0.0.1:8081';
       const data = validateUrl(validURL);
       const expectedData = {
         address: validURL,
@@ -33,7 +33,7 @@ describe('Login', () => {
     });
 
     it('should set address and addressValidity="Please check the address" for a valid address', () => {
-      const validURL = 'http:localhost:8080';
+      const validURL = 'http:localhost:8081';
       const data = validateUrl(validURL);
       const expectedData = {
         address: validURL,

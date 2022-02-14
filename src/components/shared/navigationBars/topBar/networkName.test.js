@@ -130,13 +130,13 @@ describe('Network', () => {
         networks: {
           BTC: {
             nethash: customNodeHash,
-            serviceUrl: 'http://localhost:8080',
+            serviceUrl: 'http://localhost:8081',
           },
         },
       },
     };
     const wrapper = mount(<Network {...props} />);
     expect(wrapper.find('.network-name').text()).toBe('devnet');
-    expect(wrapper.find('.network-address').text()).toBe('http://localhost:8080');
+    expect(wrapper.find('.network-address').text()).toBe('http://localhost:8081');
   });
 });

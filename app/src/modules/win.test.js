@@ -43,7 +43,7 @@ describe('Electron Browser Window Wrapper', () => {
     },
     app: { getName: () => ('Lisk'), getVersion: () => ('some version') },
   };
-  const url = 'http://localhost:8080/';
+  const url = 'http://localhost:8081/';
 
   let processMock;
   let serverMock;
