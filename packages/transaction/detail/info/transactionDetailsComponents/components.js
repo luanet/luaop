@@ -15,9 +15,9 @@ import LiskAmount from '@shared/liskAmount';
 import MultiSignatureMembers, { SignedAndRemainingMembers } from '@wallet/detail/info/multisignatureMembers';
 import Tooltip from '@basics/tooltip/tooltip';
 import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@wallet/utilities/account';
-import AccountInfo from '@wallet/detail/info/accountInfo';
+import AccountInfo from './accountInfo';
 
-import { Context } from '../transactionDetails';
+import { Context } from '../../../../views/screens/managers/transactionDetails/transactionDetails';
 import styles from './styles.css';
 
 const getDelegateName = (transaction, activeToken) => (
