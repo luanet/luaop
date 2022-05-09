@@ -2,8 +2,9 @@ import routes from 'src/routes/routes';
 import history from 'src/utils/history';
 import externalLinks from './externalLinks';
 
-jest.mock('@common/utilities/history', () => ({
-  push: jest.fn(), replace: jest.fn(),
+jest.mock('src/modules/common/utilities/history', () => ({
+  push: jest.fn(),
+  replace: jest.fn(),
 }));
 
 describe('externalLinks', () => {
@@ -32,7 +33,9 @@ describe('externalLinks', () => {
   it('opens url', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     externalLinks.init();
@@ -43,7 +46,9 @@ describe('externalLinks', () => {
   it('opens send modal without query params', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     externalLinks.init();
@@ -54,22 +59,30 @@ describe('externalLinks', () => {
   it('opens send modal with query params', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     externalLinks.init();
     callbacks.openUrl({}, 'lisk://wallet?recipient=1L&amount=100');
-    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=send&recipient=1L&amount=100');
+    expect(history.replace).toHaveBeenCalledWith(
+      '/wallet?modal=send&recipient=1L&amount=100',
+    );
   });
 
   it('opens voting queue modal', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     externalLinks.init();
     callbacks.openUrl({}, 'lisk://vote?votes=delegate');
-    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=votingQueue&votes=delegate');
+    expect(history.replace).toHaveBeenCalledWith(
+      '/wallet?modal=votingQueue&votes=delegate',
+    );
   });
 });

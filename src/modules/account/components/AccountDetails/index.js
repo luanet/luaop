@@ -8,13 +8,13 @@ import {
   parseSearchParams,
   addSearchParamsToUrl,
 } from 'src/utils/searchParams';
-import { transactionsRetrieved } from '@common/store/actions';
+import { transactionsRetrieved } from 'src/modules/common/store/actions';
 import {
   selectAccount,
   selectActiveToken,
   selectSettings,
   selectTransactions,
-} from '@common/store/selectors';
+} from 'src/modules/common/store/selectors';
 import TabsContainer from 'src/theme/tabs/tabsContainer/tabsContainer';
 import Transactions from '@transaction/components/WalletTransactions';
 import Overview from '@wallet/components/explorerLayout/WalletInfoOverview';

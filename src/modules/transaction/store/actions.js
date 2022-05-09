@@ -7,7 +7,10 @@ import { isEmpty } from 'src/utils/helpers';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@transaction/components/signMultiSignTransaction/helpers';
 import { timerReset } from '@auth/store/action';
-import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
+import {
+  loadingStarted,
+  loadingFinished,
+} from 'src/modules/common/store/actions/loading';
 import actionTypes from './actionTypes';
 import { getTransactions, create, broadcast } from '../api';
 import {
@@ -21,7 +24,9 @@ import {
  * Action trigger when user logout from the application
  * the transactions reducer is set to initial state
  */
-export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransactionsData });
+export const emptyTransactionsData = () => ({
+  type: actionTypes.emptyTransactionsData,
+});
 
 /**
  * Action trigger after a new transaction is broadcasted to the network
@@ -30,7 +35,7 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
  * @param {Object} params - all params
  * @param {String} params.senderPublicKey - alphanumeric string
  */
-export const pendingTransactionAdded = data => ({
+export const pendingTransactionAdded = (data) => ({
   type: actionTypes.pendingTransactionAdded,
   data,
 });
@@ -47,44 +52,45 @@ export const pendingTransactionAdded = data => ({
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
  */
 export const transactionsRetrieved = ({
-  address,
-  limit = DEFAULT_LIMIT,
-  offset = 0,
-  filters = {},
-}) => async (dispatch, getState) => {
-  dispatch(loadingStarted(actionTypes.transactionsRetrieved));
+  address, limit = DEFAULT_LIMIT, offset = 0, filters = {},
+}) =>
+  async (dispatch, getState) => {
+    dispatch(loadingStarted(actionTypes.transactionsRetrieved));
 
-  const { network, token } = getState();
-  const activeToken = token.active;
+    const { network, token } = getState();
+    const activeToken = token.active;
 
-  const params = {
-    address,
-    ...filters,
-    limit,
-    offset,
+    const params = {
+      address,
+      ...filters,
+      limit,
+      offset,
+    };
+
+    try {
+      const { data, meta } = await getTransactions(
+        { network, params },
+        activeToken,
+      );
+      dispatch({
+        type: actionTypes.transactionsRetrieved,
+        data: {
+          offset,
+          address,
+          filters,
+          confirmed: data,
+          count: meta.total,
+        },
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.transactionLoadFailed,
+        data: { error },
+      });
+    } finally {
+      dispatch(loadingFinished(actionTypes.transactionsRetrieved));
+    }
   };
-
-  try {
-    const { data, meta } = await getTransactions({ network, params }, activeToken);
-    dispatch({
-      type: actionTypes.transactionsRetrieved,
-      data: {
-        offset,
-        address,
-        filters,
-        confirmed: data,
-        count: meta.total,
-      },
-    });
-  } catch (error) {
-    dispatch({
-      type: actionTypes.transactionLoadFailed,
-      data: { error },
-    });
-  } finally {
-    dispatch(loadingFinished(actionTypes.transactionsRetrieved));
-  }
-};
 
 export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,
@@ -100,25 +106,28 @@ export const resetTransactionResult = () => ({
  * @param {Number} data.reference - Data field for LSK transactions
  */
 // eslint-disable-next-line max-statements
-export const transactionCreated = data => async (dispatch, getState) => {
-  const {
-    wallet, token, network,
-  } = getState();
+export const transactionCreated = (data) => async (dispatch, getState) => {
+  const { wallet, token, network } = getState();
   const activeToken = token.active;
   const hwInfo = isEmpty(wallet.hwInfo) ? undefined : wallet.hwInfo; // @todo remove this by #3898
 
-  const [error, tx] = await to(create({
-    transactionObject: {
-      ...data,
-      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
-    },
-    wallet: {
-      ...wallet.info[activeToken],
-      hwInfo,
-      passphrase: wallet.passphrase,
-    },
-    network,
-  }, activeToken));
+  const [error, tx] = await to(
+    create(
+      {
+        transactionObject: {
+          ...data,
+          moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+        },
+        wallet: {
+          ...wallet.info[activeToken],
+          hwInfo,
+          passphrase: wallet.passphrase,
+        },
+        network,
+      },
+      activeToken,
+    ),
+  );
 
   if (error) {
     dispatch({
@@ -159,9 +168,7 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const [signedTx, err] = await signMultisigTransaction(
     transformedTx,
     activeWallet,
-    {
-      data: activeWallet,
-    },
+    { data: activeWallet },
     signatureCollectionStatus.partiallySigned,
     network,
   );
@@ -188,17 +195,16 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
  * @param {Number} transaction.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} transaction.reference - Data field for LSK transactions
  */
-export const transactionBroadcasted = transaction =>
+export const transactionBroadcasted = (transaction) =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
     const { network, token, wallet } = getState();
     const activeToken = token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
-    const [error] = await to(broadcast(
-      { transaction, serviceUrl, network },
-      activeToken,
-    ));
+    const [error] = await to(
+      broadcast({ transaction, serviceUrl, network }, activeToken),
+    );
 
     if (error) {
       dispatch({
@@ -216,11 +222,18 @@ export const transactionBroadcasted = transaction =>
 
       if (activeToken === tokenMap.LSK.key) {
         const transformedTransaction = transformTransaction(transaction);
-        if (transformedTransaction.sender.address === wallet.info.LSK.summary.address) {
-          dispatch(pendingTransactionAdded({ ...transformedTransaction, isPending: true }));
+        if (
+          transformedTransaction.sender.address
+          === wallet.info.LSK.summary.address
+        ) {
+          dispatch(
+            pendingTransactionAdded({
+              ...transformedTransaction,
+              isPending: true,
+            }),
+          );
         }
       }
-
       dispatch(timerReset());
     }
   };
@@ -234,39 +247,36 @@ export const transactionBroadcasted = transaction =>
  * @param {object} data.sender
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  */
-export const multisigTransactionSigned = ({
-  rawTransaction, sender,
-}) => async (dispatch, getState) => {
-  const {
-    network, wallet,
-  } = getState();
-  const activeWallet = {
-    ...wallet.info.LSK,
-    passphrase: wallet.passphrase,
-    hwInfo: wallet.hwInfo,
+export const multisigTransactionSigned = ({ rawTransaction, sender }) =>
+  async (dispatch, getState) => {
+    const { network, wallet } = getState();
+    const activeWallet = {
+      ...wallet.info.LSK,
+      passphrase: wallet.passphrase,
+      hwInfo: wallet.hwInfo,
+    };
+    const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
+
+    const [tx, error] = await signMultisigTransaction(
+      rawTransaction,
+      activeWallet,
+      sender,
+      txStatus,
+      network,
+    );
+
+    if (!error) {
+      dispatch({
+        type: actionTypes.transactionDoubleSigned,
+        data: tx,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    }
   };
-  const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
-
-  const [tx, error] = await signMultisigTransaction(
-    rawTransaction,
-    activeWallet,
-    sender,
-    txStatus,
-    network,
-  );
-
-  if (!error) {
-    dispatch({
-      type: actionTypes.transactionDoubleSigned,
-      data: tx,
-    });
-  } else {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: error,
-    });
-  }
-};
 
 /**
  * Used when a fully signed transaction is imported, this action
@@ -278,10 +288,12 @@ export const multisigTransactionSigned = ({
  */
 export const signatureSkipped = ({ rawTransaction }) => {
   const flatTx = flattenTransaction(rawTransaction);
-  const binaryTx = createTransactionObject(flatTx, rawTransaction.moduleAssetId);
-
-  return ({
+  const binaryTx = createTransactionObject(
+    flatTx,
+    rawTransaction.moduleAssetId,
+  );
+  return {
     type: actionTypes.signatureSkipped,
     data: binaryTx,
-  });
+  };
 };

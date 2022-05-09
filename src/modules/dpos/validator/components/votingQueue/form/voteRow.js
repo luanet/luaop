@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { voteEdited } from '@common/store/actions';
+import { voteEdited } from 'src/modules/common/store/actions';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -79,7 +79,11 @@ const VoteRow = ({
       {state === ComponentState.notEditing ? (
         <>
           <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
-            {unconfirmed ? <TokenAmount val={unconfirmed} token={token} /> : '-'}
+            {unconfirmed ? (
+              <TokenAmount val={unconfirmed} token={token} />
+            ) : (
+              '-'
+            )}
           </span>
           <div
             className={`${styles.editIconsContainer} ${styles.centerContent}`}

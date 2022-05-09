@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import routes from 'src/routes/routes';
 import { useTheme } from 'src/theme/Theme';
-import { addedToWatchList, removedFromWatchList } from '@common/store/actions';
+import {
+  addedToWatchList,
+  removedFromWatchList,
+} from 'src/modules/common/store/actions';
 import styles from '@dpos/validator/components/delegates/delegates.css';
 import {
   DelegateWeight,
@@ -17,7 +20,7 @@ import {
 
 const getForgingTime = (time) => {
   if (!time) return '-';
-  const diff = time - Math.floor((new Date()).getTime() / 1000);
+  const diff = time - Math.floor(new Date().getTime() / 1000);
   if (Math.abs(diff) < 9) return 'now';
   const absTime = Math.abs(diff);
   const minutes = absTime / 60 >= 1 ? `${Math.floor(absTime / 60)}m ` : '';
@@ -29,15 +32,22 @@ const getForgingTime = (time) => {
 };
 
 const DelegateRow = ({
-  data, className, t, activeTab, watchList, setActiveTab, blocks,
+  data,
+  className,
+  t,
+  activeTab,
+  watchList,
+  setActiveTab,
+  blocks,
 }) => {
   const formattedForgingTime = getForgingTime(
-    data.nextForgingTime || blocks.forgers[blocks.indexBook[data.address]]?.nextForgingTime,
+    data.nextForgingTime
+      || blocks.forgers[blocks.indexBook[data.address]]?.nextForgingTime,
   );
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  const isWatched = watchList.find(address => address === data.address);
+  const isWatched = watchList.find((address) => address === data.address);
 
   const removeFromWatchList = (e) => {
     e.preventDefault();
@@ -67,51 +77,41 @@ const DelegateRow = ({
         addToWatchList={addToWatchList}
         removeFromWatchList={removeFromWatchList}
       />
-      <DelegateWeight
-        value={data.totalVotesReceived}
-        activeTab={activeTab}
-      />
-      {
-        (activeTab === 'active' || activeTab === 'watched' || activeTab === 'standby')
-          ? (
-            <DelegateRank
-              data={data}
-              activeTab={activeTab}
-            />
-          ) : null
-      }
-      {
-        (activeTab === 'active' || activeTab === 'watched')
-          ? (
-            <>
-              <ForgingTime
-                state={data.state}
-                time={formattedForgingTime}
-                activeTab={activeTab}
-              />
-              <RoundState
-                status={data.status}
-                state={data.state || blocks.forgers[blocks.indexBook[data.address]]?.state}
-                lastBlock={data.lastBlock}
-                isBanned={data.isBanned}
-                t={t}
-                time={formattedForgingTime}
-                activeTab={activeTab}
-              />
-            </>
-          ) : null
-      }
-      {
-        activeTab !== 'active'
-          ? (
-            <DelegateStatus
-              status={data.status}
-              totalVotesReceived={data.totalVotesReceived}
-              activeTab={activeTab}
-              theme={theme}
-            />
-          ) : null
-      }
+      <DelegateWeight value={data.totalVotesReceived} activeTab={activeTab} />
+      {activeTab === 'active'
+      || activeTab === 'watched'
+      || activeTab === 'standby' ? (
+        <DelegateRank data={data} activeTab={activeTab} />
+        ) : null}
+      {activeTab === 'active' || activeTab === 'watched' ? (
+        <>
+          <ForgingTime
+            state={data.state}
+            time={formattedForgingTime}
+            activeTab={activeTab}
+          />
+          <RoundState
+            status={data.status}
+            state={
+              data.state
+              || blocks.forgers[blocks.indexBook[data.address]]?.state
+            }
+            lastBlock={data.lastBlock}
+            isBanned={data.isBanned}
+            t={t}
+            time={formattedForgingTime}
+            activeTab={activeTab}
+          />
+        </>
+      ) : null}
+      {activeTab !== 'active' ? (
+        <DelegateStatus
+          status={data.status}
+          totalVotesReceived={data.totalVotesReceived}
+          activeTab={activeTab}
+          theme={theme}
+        />
+      ) : null}
     </Link>
   );
 };

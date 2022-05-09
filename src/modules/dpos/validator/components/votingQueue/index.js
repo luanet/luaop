@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import TransactionSignature from '@transaction/components/TransactionSignature';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import { processLaunchProtocol } from '@common/store/actions';
+import { processLaunchProtocol } from 'src/modules/common/store/actions';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 
 import Form from './form';

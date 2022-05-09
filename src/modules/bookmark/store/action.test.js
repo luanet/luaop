@@ -10,7 +10,7 @@ import {
   bookmarkUpdated,
 } from './action';
 
-jest.mock('@common/utilities/localJSONStorage', () => ({
+jest.mock('src/modules/common/utilities/localJSONStorage', () => ({
   getFromStorage: jest.fn(),
 }));
 
@@ -81,6 +81,8 @@ describe('actions: boomarks', () => {
       type: actionTypes.bookmarkRemoved,
     };
     expect(bookmarkRemoved(removedData)).toEqual(expectedAction);
-    expect(bookmarkRemoved({ address: wallets.genesis.summary.address })).toEqual(expectedAction);
+    expect(
+      bookmarkRemoved({ address: wallets.genesis.summary.address }),
+    ).toEqual(expectedAction);
   });
 });

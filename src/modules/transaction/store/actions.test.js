@@ -5,7 +5,7 @@ import * as transactionUtils from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
 import { sampleTransaction } from '@tests/constants/transactions';
 import accounts from '@tests/constants/wallets';
-import commonActionTypes from '@common/store/actions/actionTypes';
+import commonActionTypes from 'src/modules/common/store/actions/actionTypes';
 import actionTypes from './actionTypes';
 import {
   emptyTransactionsData,
@@ -21,7 +21,7 @@ import {
 
 jest.mock('@dpos/validator/api');
 jest.mock('@transaction/utils/hwManager');
-jest.mock('@common/utilities/api/http');
+jest.mock('src/modules/common/utilities/api/http');
 
 describe('actions: transactions', () => {
   beforeEach(() => {
@@ -150,7 +150,8 @@ describe('actions: transactions', () => {
         signatures: ['xnVCm30IUhtYidgBX', 'uxsFGiaqS3n4ydB'],
         sender: {
           address: '3040783849904107057L',
-          publicKey: 'MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6',
+          publicKey:
+            'MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6',
         },
         isPending: true,
       };
@@ -222,7 +223,8 @@ describe('actions: transactions', () => {
       };
       const transactionError = new Error('Transaction create error');
       loginTypes.passphrase.code = 1;
-      jest.spyOn(hwManager, 'signTransactionByHW')
+      jest
+        .spyOn(hwManager, 'signTransactionByHW')
         .mockRejectedValue(transactionError);
       const expectedAction = {
         type: actionTypes.transactionSignError,
@@ -269,8 +271,7 @@ describe('actions: transactions', () => {
     it.skip('should create an action to store signature error', async () => {
       // Prepare the store
       const error = new Error('error signing tx');
-      jest.spyOn(transactionUtils, 'sign')
-        .mockImplementation(() => error);
+      jest.spyOn(transactionUtils, 'sign').mockImplementation(() => error);
 
       // Consume the utility
       await transactionDoubleSigned()(dispatch, getStateWithTx);
@@ -312,7 +313,9 @@ describe('actions: transactions', () => {
 
     it('should dispatch broadcastedTransactionError action when broadcast has an error', async () => {
       // Arrange
-      const transactionBroadcastError = new Error('Transaction broadcast error');
+      const transactionBroadcastError = new Error(
+        'Transaction broadcast error',
+      );
       httpApi.mockRejectedValue(transactionBroadcastError);
       const expectedAction = {
         type: actionTypes.broadcastedTransactionError,
@@ -345,7 +348,10 @@ describe('actions: transactions', () => {
       //   type: actionTypes.pendingTransactionAdded,
       //   data: { ...transformedAccountTransaction, isPending: true },
       // };
-      const expectedAction3 = { data: expect.anything(), type: actionTypes.timerReset };
+      const expectedAction3 = {
+        data: expect.anything(),
+        type: actionTypes.timerReset,
+      };
 
       // Act
       await transactionBroadcasted(sampleTransaction)(dispatch, getState);
@@ -382,7 +388,9 @@ describe('actions: transactions', () => {
 
     it('should create an action to store double signed tx', async () => {
       // Consume the utility
-      jest.spyOn(transactionUtils, 'signMultisigTransaction').mockImplementation(() => [{ id: 1 }, undefined]);
+      jest
+        .spyOn(transactionUtils, 'signMultisigTransaction')
+        .mockImplementation(() => [{ id: 1 }, undefined]);
       await multisigTransactionSigned(params)(dispatch, getStateWithTx);
 
       // Prepare expectations
@@ -398,7 +406,9 @@ describe('actions: transactions', () => {
     it('should create an action to store signature error', async () => {
       // Prepare the store
       const error = { message: 'error signing tx' };
-      jest.spyOn(transactionUtils, 'signMultisigTransaction').mockImplementation(() => [undefined, error]);
+      jest
+        .spyOn(transactionUtils, 'signMultisigTransaction')
+        .mockImplementation(() => [undefined, error]);
 
       // Consume the utility
       await multisigTransactionSigned(params)(dispatch, getStateWithTx);
@@ -422,7 +432,8 @@ describe('actions: transactions', () => {
         fee: '10000000',
         nonce: 0,
         sender: {
-          publicKey: '00f046aea2782180c51f7271249a0c107e6b6295c6b3c31e43c1a3ed644dcdeb',
+          publicKey:
+            '00f046aea2782180c51f7271249a0c107e6b6295c6b3c31e43c1a3ed644dcdeb',
         },
         asset: {
           amount: '200',

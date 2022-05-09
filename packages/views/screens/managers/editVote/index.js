@@ -9,7 +9,7 @@ import {
   removeSearchParamsFromUrl,
 } from 'src/utils/searchParams';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { voteEdited } from '@common/store/actions';
+import { voteEdited } from 'src/modules/common/store/actions';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';

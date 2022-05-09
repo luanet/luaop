@@ -1,6 +1,8 @@
 import {
-  bookmarkAdded, bookmarkUpdated, bookmarkRemoved,
-} from '@common/store/actions';
+  bookmarkAdded,
+  bookmarkUpdated,
+  bookmarkRemoved,
+} from 'src/modules/common/store/actions';
 import wallets from '@tests/constants/wallets';
 import actionTypes from './actionTypes';
 import bookmarks from './reducer';

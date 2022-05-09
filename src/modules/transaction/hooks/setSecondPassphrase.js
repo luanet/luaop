@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectActiveTokenAccount } from '@common/store/selectors';
+import { selectActiveTokenAccount } from 'src/modules/common/store/selectors';
 import { extractPublicKey } from '@wallet/utils/account';
 
 const empty2ndPass = {
@@ -20,8 +20,9 @@ const setSecondPassphrase = () => {
       return messages;
     }
 
-    const secondPublicKey = account.keys.mandatoryKeys
-      .filter(item => item !== account.summary.publicKey);
+    const secondPublicKey = account.keys.mandatoryKeys.filter(
+      (item) => item !== account.summary.publicKey,
+    );
     const publicKey = extractPublicKey(data);
 
     // compare them

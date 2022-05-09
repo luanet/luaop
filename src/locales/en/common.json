@@ -159,6 +159,7 @@
   "Enable network switcher to connect to different networks or service nodes when signing in.": "Enable network switcher to connect to different networks or service nodes when signing in.",
   "English": "English",
   "Error": "Error",
+  "Error retrieving conversion rates.": "Error retrieving conversion rates.",
   "Expand sidebar": "Expand sidebar",
   "Explorer": "Explorer",
   "Failed to load block details.": "Failed to load block details.",

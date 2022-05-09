@@ -1,9 +1,15 @@
+/* eslint-disable max-len */
 import {
-  accountDataUpdated, transactionsRetrieved, settingsUpdated,
-  votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
-} from '@common/store/actions';
+  accountDataUpdated,
+  transactionsRetrieved,
+  settingsUpdated,
+  votesRetrieved,
+  emptyTransactionsData,
+  networkSelected,
+  networkStatusUpdated,
+} from 'src/modules/common/store/actions';
 
-import commonActionTypes from '@common/store/actions/actionTypes';
+import commonActionTypes from 'src/modules/common/store/actions/actionTypes';
 import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 import transactionActionTypes from '@transaction/store/actionTypes';
@@ -16,14 +22,14 @@ import history from 'src/utils/history';
 import walletActionTypes from './actionTypes';
 import middleware from './middleware';
 
-jest.mock('@common/utilities/history');
+jest.mock('src/modules/common/utilities/history');
 
 jest.mock('@transaction/api', () => ({
   getTransactions: jest.fn(),
   emptyTransactionsData: jest.fn(),
 }));
 
-jest.mock('@common/store/actions', () => ({
+jest.mock('src/modules/common/store/actions', () => ({
   accountDataUpdated: jest.fn(),
   transactionsRetrieved: jest.fn(),
   settingsUpdated: jest.fn(),
@@ -33,7 +39,7 @@ jest.mock('@common/store/actions', () => ({
   networkStatusUpdated: jest.fn(),
 }));
 
-jest.mock('@common/utilities/login', () => ({
+jest.mock('src/modules/common/utilities/login', () => ({
   getAutoLogInData: jest.fn(),
   shouldAutoLogIn: jest.fn(),
 }));
@@ -92,10 +98,12 @@ const block = {
 const transactionsRetrievedAction = {
   type: transactionActionTypes.transactionsRetrieved,
   data: {
-    confirmed: [{
-      type: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
-      confirmations: 1,
-    }],
+    confirmed: [
+      {
+        type: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
+        confirmations: 1,
+      },
+    ],
   },
 };
 
@@ -110,7 +118,8 @@ const network = {
   networks: {
     LSK: {
       nodeUrl: 'http://localhost:4000',
-      nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+      nethash:
+        '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
     },
   },
 };
@@ -140,9 +149,11 @@ const defaultState = {
   network,
   wallet,
   transactions: {
-    pending: [{
-      id: 12498250891724098,
-    }],
+    pending: [
+      {
+        id: 12498250891724098,
+      },
+    ],
     confirmed: [],
     wallet: {
       summary: {
@@ -159,7 +170,7 @@ describe('Account middleware', () => {
   const next = jest.fn();
   let store;
 
-  window.Notification = () => { };
+  window.Notification = () => {};
   const windowNotificationSpy = jest.spyOn(window, 'Notification');
 
   beforeEach(() => {
@@ -242,7 +253,10 @@ describe('Account middleware', () => {
       // Act
       await middleware(store)(next)(newBlockCreated);
       // Assert
-      expect(transactionApi.getTransactions).toHaveBeenCalledWith({ network: expect.anything(), params: expect.anything() }, 'LSK');
+      expect(transactionApi.getTransactions).toHaveBeenCalledWith(
+        { network: expect.anything(), params: expect.anything() },
+        'LSK',
+      );
       expect(accountDataUpdated).toHaveBeenCalled();
       expect(transactionsRetrieved).toHaveBeenCalledWith({
         address: expect.anything(),
@@ -266,14 +280,9 @@ describe('Account middleware', () => {
 
     it.skip('should show Notification on incoming transaction', () => {
       middleware(store)(next)(newBlockCreated);
-      expect(windowNotificationSpy).nthCalledWith(
-        1,
-        '10 LSK Received',
-        {
-          body:
-            'Your account just received 10 LSK with message Message',
-        },
-      );
+      expect(windowNotificationSpy).nthCalledWith(1, '10 LSK Received', {
+        body: 'Your account just received 10 LSK with message Message',
+      });
     });
   });
 
@@ -284,8 +293,7 @@ describe('Account middleware', () => {
       expect(votesRetrieved).toHaveBeenCalled();
     });
     it('should not dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
-      transactionsRetrievedAction
-        .data.confirmed[0].type = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
+      transactionsRetrievedAction.data.confirmed[0].type = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
       middleware(store)(next)(transactionsRetrievedAction);
       expect(votesRetrieved).not.toHaveBeenCalled();
     });
@@ -304,9 +312,9 @@ describe('Account middleware', () => {
         type: walletActionTypes.accountLoggedOut,
       };
       middleware(store)(next)(accountLoggedOutAction);
-      expect(settingsUpdated).toHaveBeenCalledWith(
-        { token: { active: tokenMap.LSK.key } },
-      );
+      expect(settingsUpdated).toHaveBeenCalledWith({
+        token: { active: tokenMap.LSK.key },
+      });
       expect(emptyTransactionsData).toHaveBeenCalled();
     });
   });

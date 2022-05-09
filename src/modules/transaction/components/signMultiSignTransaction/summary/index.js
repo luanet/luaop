@@ -1,7 +1,7 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { multisigTransactionSigned } from '@common/store/actions';
+import { multisigTransactionSigned } from 'src/modules/common/store/actions';
 import { getAccount } from '@wallet/utils/api';
 import withData from 'src/utils/withData';
 import { withRouter } from 'react-router';
@@ -20,7 +20,7 @@ const apis = {
   },
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: {
     ...state.wallet.info.LSK,
     passphrase: state.passphrase,

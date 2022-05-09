@@ -2,10 +2,10 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { secondPassphraseStored } from '@common/store/actions';
+import { secondPassphraseStored } from 'src/modules/common/store/actions';
 import TransactionSummary from '../components/TransactionSummary/TransactionSummary';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   token: state.token.active,
   transactions: state.transactions,
   wallet: {

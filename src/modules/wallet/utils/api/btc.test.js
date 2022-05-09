@@ -2,7 +2,7 @@ import bitcoin from 'bitcoinjs-lib';
 import http from 'src/utils/http';
 import { getAccount } from './btc';
 
-jest.mock('@common/utilities/api/http', () => ({
+jest.mock('src/modules/common/utilities/api/http', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
@@ -61,7 +61,8 @@ describe('API: BTC Accounts', () => {
     });
 
     it('should return empty account if the API returns 404', async () => {
-      http.mockImplementation(() => Promise.reject(Error('Account not found.')));
+      http.mockImplementation(() =>
+        Promise.reject(Error('Account not found.')));
       // Checks the baseUrl too
       const result = await getAccount({
         network,

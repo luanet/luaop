@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { transactionBroadcasted, resetTransactionResult } from '@common/store/actions';
+import {
+  transactionBroadcasted,
+  resetTransactionResult,
+} from 'src/modules/common/store/actions';
 import TransactionResult from '../components/TransactionResult/TransactionResult';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   activeToken: state.token.active,
   transactions: state.transactions,
   account: {

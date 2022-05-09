@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { settingsUpdated } from '@common/store/actions';
+import { settingsUpdated } from 'src/modules/common/store/actions';
 import DiscreetModeToggle from './discreetModeToggle';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isDiscreetMode: state.settings.discreetMode,
 });
 

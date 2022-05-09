@@ -7,10 +7,10 @@ import {
   resetTransactionResult,
   transactionDoubleSigned,
   transactionCreated,
-} from '@common/store/actions';
+} from 'src/modules/common/store/actions';
 import Summary from './summary';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: getActiveTokenAccount(state),
   transactions: state.transactions,
   token: state.token && state.token.active,
@@ -22,4 +22,7 @@ const mapDispatchToProps = {
   transactionCreated,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Summary));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(Summary));

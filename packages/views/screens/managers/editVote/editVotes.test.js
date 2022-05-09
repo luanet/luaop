@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import * as votingActions from '@common/store/actions';
+import * as votingActions from 'src/modules/common/store/actions';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import EditVote from './index';
 

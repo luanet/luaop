@@ -5,7 +5,7 @@ import {
   calculateTransactionFee,
 } from './btc';
 
-jest.mock('@common/utilities/api/http', () => ({
+jest.mock('src/modules/common/utilities/api/http', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
@@ -21,7 +21,7 @@ describe('API: BTC Transactions', () => {
     },
   };
   const sampleId = 'sample_id';
-  const sampleTx = i => ({
+  const sampleTx = (i) => ({
     txid: `sample_id_${i}`,
     timestamp: 1607352618,
     confirmations: i,
@@ -130,20 +130,22 @@ describe('API: BTC Transactions', () => {
       jest.clearAllMocks();
       http.mockRejectedValue(new Error('Error fetching data.'));
 
-      await expect(getTransactions({
-        network,
-        params,
-      }))
-        .rejects
-        .toThrow('Error fetching data.');
+      await expect(
+        getTransactions({
+          network,
+          params,
+        }),
+      ).rejects.toThrow('Error fetching data.');
     });
   });
 
   describe('calculateTransactionFee', () => {
-    expect(calculateTransactionFee({
-      inputCount: 10,
-      outputCount: 10,
-      selectedFeePerByte: 1,
-    })).toBe(2160);
+    expect(
+      calculateTransactionFee({
+        inputCount: 10,
+        outputCount: 10,
+        selectedFeePerByte: 1,
+      }),
+    ).toBe(2160);
   });
 });

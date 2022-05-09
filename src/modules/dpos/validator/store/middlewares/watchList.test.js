@@ -2,7 +2,9 @@ import { setInStorage } from 'src/utils/localJSONStorage';
 import actionTypes from '../actions/actionTypes';
 import middleware from './watchList';
 
-jest.mock('@common/utilities/localJSONStorage', () => ({ setInStorage: jest.fn() }));
+jest.mock('src/modules/common/utilities/localJSONStorage', () => ({
+  setInStorage: jest.fn(),
+}));
 
 describe('Middleware: WatchList', () => {
   const next = jest.fn();
@@ -22,9 +24,17 @@ describe('Middleware: WatchList', () => {
   });
 
   it('should update localStorage with current watchlist', () => {
-    const actions = [{ type: actionTypes.addedToWatchList, data: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12' } },
-      { type: actionTypes.removedFromWatchList, data: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' } }];
-    actions.map(action => middleware(store)(next)(action));
+    const actions = [
+      {
+        type: actionTypes.addedToWatchList,
+        data: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12' },
+      },
+      {
+        type: actionTypes.removedFromWatchList,
+        data: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+      },
+    ];
+    actions.map((action) => middleware(store)(next)(action));
 
     expect(setInStorage).toHaveBeenCalledTimes(actions.length);
   });

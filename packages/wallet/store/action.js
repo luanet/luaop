@@ -7,7 +7,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from 'src/utils/helpers';
 import { create } from '@transaction/api';
-import { selectCurrentBlockHeight } from '@common/store/selectors';
+import { selectCurrentBlockHeight } from 'src/modules/common/store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@wallet/utils/api';
 import { getConnectionErrorMessage } from '@network/utils/getNetwork';
 import { extractKeyPair, getUnlockableUnlockObjects } from '@wallet/utils/account';

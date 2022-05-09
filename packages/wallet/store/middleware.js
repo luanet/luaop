@@ -8,7 +8,7 @@ import { getActiveTokenAccount } from '@wallet/utils/account';
 import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
-} from '@common/store/actions';
+} from 'src/modules/common/store/actions';
 import analytics from 'src/utils/analytics';
 import { getTransactions } from '@transaction/api';
 import i18n from 'src/utils/i18n/i18n';

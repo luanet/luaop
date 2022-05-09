@@ -2,11 +2,15 @@
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { multisigTransactionSigned, transactionDoubleSigned, signatureSkipped } from '@common/store/actions';
+import {
+  multisigTransactionSigned,
+  transactionDoubleSigned,
+  signatureSkipped,
+} from 'src/modules/common/store/actions';
 import { withTranslation } from 'react-i18next';
 import TransactionSignature from '../components/TransactionSignature/TransactionSignature';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   transactions: state.transactions,
   account: state.wallet,
 });

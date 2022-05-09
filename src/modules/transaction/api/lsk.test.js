@@ -10,18 +10,24 @@ import {
   getTransactions,
   getTransactionStats,
   getSchemas,
-  getTransactionFee, getRegisteredDelegates,
+  getTransactionFee,
+  getRegisteredDelegates,
 } from './lsk';
 
 const {
-  transfer, voteDelegate, registerDelegate, registerMultisignatureGroup, unlockToken, reclaimLSK,
+  transfer,
+  voteDelegate,
+  registerDelegate,
+  registerMultisignatureGroup,
+  unlockToken,
+  reclaimLSK,
 } = MODULE_ASSETS_NAME_ID_MAP;
 const { network } = getState();
 
-jest.mock('@common/utilities/api/http', () =>
+jest.mock('src/modules/common/utilities/api/http', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
 
-jest.mock('@common/utilities/api/ws', () =>
+jest.mock('src/modules/common/utilities/api/ws', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
 
 jest.mock('@dpos/validator/api', () => ({
@@ -60,7 +66,8 @@ describe('API: LSK Transactions', () => {
 
     it('should call http with block id', async () => {
       await getTransactions({
-        network, params: { blockId: sampleId },
+        network,
+        params: { blockId: sampleId },
       });
 
       expect(http).toHaveBeenCalledWith({
@@ -111,8 +118,7 @@ describe('API: LSK Transactions', () => {
         network,
         path: '/api/v2/transactions',
         baseUrl: undefined,
-        params: {
-        },
+        params: {},
       });
     });
   });
@@ -127,15 +133,16 @@ describe('API: LSK Transactions', () => {
       http.mockRejectedValue(Error('Error fetching data.'));
 
       // call and anticipate failure
-      await expect(getRegisteredDelegates({ network }))
-        .rejects
-        .toThrow('Error fetching data.');
+      await expect(getRegisteredDelegates({ network })).rejects.toThrow(
+        'Error fetching data.',
+      );
     });
 
     it('should return correct stats of registered delegates', async () => {
       // create sample delegate registration transactions
-      const txs = [7, 6, 6, 6, 5, 5, 5, 4, 4, 4]
-        .map(d => ({ block: { timestamp: (new Date(`2020-${d}-1`)).getTime() / 1000 } }));
+      const txs = [7, 6, 6, 6, 5, 5, 5, 4, 4, 4].map((d) => ({
+        block: { timestamp: new Date(`2020-${d}-1`).getTime() / 1000 },
+      }));
 
       // mock internals
       delegates.getDelegates.mockResolvedValue({
@@ -150,7 +157,11 @@ describe('API: LSK Transactions', () => {
       // Call and expect right values
       const response = await getRegisteredDelegates({ network });
       expect(response).toEqual([
-        ['2020-3', 90], ['2020-4', 93], ['2020-5', 96], ['2020-6', 99], ['2020-7', 100],
+        ['2020-3', 90],
+        ['2020-4', 93],
+        ['2020-5', 96],
+        ['2020-6', 99],
+        ['2020-7', 100],
       ]);
     });
   });
@@ -225,7 +236,8 @@ describe('API: LSK Transactions', () => {
       data: 'to test the instance',
       nonce: '6',
       recipientAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
-      senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+      senderPublicKey:
+        'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
       moduleAssetId: transfer,
     };
     const selectedPriority = {
@@ -246,7 +258,8 @@ describe('API: LSK Transactions', () => {
       const voteTxData = {
         moduleAssetId: voteDelegate,
         nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        senderPublicKey:
+          'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         votes: [],
       };
 
@@ -262,7 +275,8 @@ describe('API: LSK Transactions', () => {
       const voteTxData = {
         moduleAssetId: registerDelegate,
         nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        senderPublicKey:
+          'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         username: 'some_username',
       };
 
@@ -278,7 +292,8 @@ describe('API: LSK Transactions', () => {
       const transaction = {
         moduleAssetId: reclaimLSK,
         nonce: '1',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        senderPublicKey:
+          'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         amount: '4454300000',
       };
       const result = await getTransactionFee({
@@ -297,8 +312,12 @@ describe('API: LSK Transactions', () => {
         fee: '1000000',
         amount: '10000000',
         numberOfSignatures: 2,
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-        mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
+        senderPublicKey:
+          'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        mandatoryKeys: [
+          accounts.genesis.summary.publicKey,
+          accounts.delegate.summary.publicKey,
+        ],
         optionalKeys: [accounts.delegate_candidate.summary.publicKey],
       };
       const result = await getTransactionFee({
@@ -316,7 +335,8 @@ describe('API: LSK Transactions', () => {
         moduleAssetId: transfer,
         amount: '100000',
         nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        senderPublicKey:
+          'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
       };
       const result = await getTransactionFee({
         transaction,
@@ -332,10 +352,17 @@ describe('API: LSK Transactions', () => {
       const transaction = {
         moduleAssetId: voteDelegate,
         nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        senderPublicKey:
+          'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         votes: [
-          { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
-          { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
+          {
+            delegateAddress: accounts.genesis.summary.address,
+            amount: '100000000',
+          },
+          {
+            delegateAddress: accounts.delegate.summary.address,
+            amount: '-100000000',
+          },
         ],
       };
       const result = await getTransactionFee({
@@ -352,7 +379,8 @@ describe('API: LSK Transactions', () => {
       const transaction = {
         moduleAssetId: registerDelegate,
         nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        senderPublicKey:
+          'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         username: 'user_name',
       };
       const result = await getTransactionFee({
@@ -369,10 +397,19 @@ describe('API: LSK Transactions', () => {
       const transaction = {
         moduleAssetId: unlockToken,
         nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        senderPublicKey:
+          'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         unlockObjects: [
-          { delegateAddress: accounts.genesis.summary.address, amount: '-10000000', unvoteHeight: 1500 },
-          { delegateAddress: accounts.delegate_candidate.summary.address, amount: '-340000000', unvoteHeight: 1500 },
+          {
+            delegateAddress: accounts.genesis.summary.address,
+            amount: '-10000000',
+            unvoteHeight: 1500,
+          },
+          {
+            delegateAddress: accounts.delegate_candidate.summary.address,
+            amount: '-340000000',
+            unvoteHeight: 1500,
+          },
         ],
       };
       const result = await getTransactionFee({

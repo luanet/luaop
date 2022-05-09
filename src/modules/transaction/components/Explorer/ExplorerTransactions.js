@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectCurrentBlockHeight } from '@common/store/selectors';
+import { selectCurrentBlockHeight } from 'src/modules/common/store/selectors';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';

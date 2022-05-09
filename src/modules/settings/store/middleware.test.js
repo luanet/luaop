@@ -1,11 +1,14 @@
-import { /* pricesRetrieved, */ emptyTransactionsData, settingsUpdated } from '@common/store/actions';
+import {
+  /* pricesRetrieved, */ emptyTransactionsData,
+  settingsUpdated,
+} from 'src/modules/common/store/actions';
 import actionTypes from './actionTypes';
 import settingsMiddleware from './middleware';
 
-jest.mock('@common/store/actions/service');
+jest.mock('src/modules/common/store/actions/service');
 // jest.mock('@settings/store/middleware');
 jest.mock('@transaction/store/actions');
-jest.mock('@common/store/actions');
+jest.mock('src/modules/common/store/actions');
 
 describe('Middleware: Settings', () => {
   const next = jest.fn();
@@ -13,7 +16,7 @@ describe('Middleware: Settings', () => {
     dispatch: jest.fn(),
     getState: () => ({
       settings: {
-        token: { },
+        token: {},
       },
     }),
   };

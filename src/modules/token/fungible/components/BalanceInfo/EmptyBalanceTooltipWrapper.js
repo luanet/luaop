@@ -2,11 +2,11 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { networkKeys } from '@network/configuration/networks';
-import { selectNetworkName } from '@common/store/selectors';
+import { selectNetworkName } from 'src/modules/common/store/selectors';
 import Tooltip from 'src/theme/Tooltip';
 import styles from './BalanceInfo.css';
 
-const getMessage = networkName => {
+const getMessage = (networkName) => {
   switch (networkName) {
     case networkKeys.mainNet:
       return 'Purchase LSK from an exchange, or request LSK from another Lisk user through the wallet panel.';
@@ -19,22 +19,21 @@ const getMessage = networkName => {
   }
 };
 
-const EmptyBalanceTooltipWrapper = ({
-  children, t, hostBalance,
-}) => {
+const EmptyBalanceTooltipWrapper = ({ children, t, hostBalance }) => {
   const networkName = useSelector(selectNetworkName);
 
-  return (hostBalance === 0
-    ? (
-      <Tooltip
-        className={`${styles.emptyBalanceTooltipWrapper} empty-balance-tooltip-wrapper`}
-        position="bottom left"
-        content={React.cloneElement(children, { className: `${children.props.className} ${styles.emptyBalanceTooltipChild} disabled` })}
-      >
-        <p>{t(getMessage(networkName))}</p>
-      </Tooltip>
-    )
-    : children
+  return hostBalance === 0 ? (
+    <Tooltip
+      className={`${styles.emptyBalanceTooltipWrapper} empty-balance-tooltip-wrapper`}
+      position="bottom left"
+      content={React.cloneElement(children, {
+        className: `${children.props.className} ${styles.emptyBalanceTooltipChild} disabled`,
+      })}
+    >
+      <p>{t(getMessage(networkName))}</p>
+    </Tooltip>
+  ) : (
+    children
   );
 };
 

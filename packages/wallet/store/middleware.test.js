@@ -1,9 +1,9 @@
 import {
   accountDataUpdated, transactionsRetrieved, settingsUpdated,
   votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
-} from '@common/store/actions';
+} from 'src/modules/common/store/actions';
 
-import commonActionTypes from '@common/store/actions/actionTypes';
+import commonActionTypes from 'src/modules/common/store/actions/actionTypes';
 import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 import transactionActionTypes from '@transaction/store/actionTypes';

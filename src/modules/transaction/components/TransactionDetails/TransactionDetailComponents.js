@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import ReactJson from 'react-json-view';
 
-import { selectCurrentBlockHeight } from '@common/store/selectors';
+import { selectCurrentBlockHeight } from 'src/modules/common/store/selectors';
 import {
   getModuleAssetTitle,
   getModuleAssetSenderLabel,

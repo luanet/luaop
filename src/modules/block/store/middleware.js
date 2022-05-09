@@ -4,17 +4,17 @@ import {
   olderBlocksRetrieved,
   forgersRetrieved,
   networkStatusUpdated,
-} from '@common/store/actions';
+} from 'src/modules/common/store/actions';
 import networkActionTypes from '@network/store/actionTypes';
 import actionTypes from './actionTypes';
 
 const oneMinute = 1000 * 60;
 
-const generateOnDisconnect = dispatch => () => {
+const generateOnDisconnect = (dispatch) => () => {
   dispatch(networkStatusUpdated({ online: false }));
 };
 
-const generateOnReconnect = dispatch => () => {
+const generateOnReconnect = (dispatch) => () => {
   dispatch(networkStatusUpdated({ online: true }));
 };
 
@@ -29,8 +29,10 @@ const blockListener = ({ getState, dispatch }) => {
     const lastBtcUpdate = network.lastBtcUpdate || 0;
     const now = new Date();
 
-    if (activeToken === tokenMap.LSK.key
-      && block.data[0]?.height !== blocks.latestBlocks[0]?.height) {
+    if (
+      activeToken === tokenMap.LSK.key
+      && block.data[0]?.height !== blocks.latestBlocks[0]?.height
+    ) {
       dispatch({
         type: actionTypes.newBlockCreated,
         data: {
@@ -39,7 +41,7 @@ const blockListener = ({ getState, dispatch }) => {
       });
       dispatch(forgersRetrieved());
     }
-    if (activeToken === tokenMap.BTC.key && (now - lastBtcUpdate > oneMinute)) {
+    if (activeToken === tokenMap.BTC.key && now - lastBtcUpdate > oneMinute) {
       dispatch({
         type: actionTypes.lastBtcUpdateSet,
         data: now,
@@ -55,21 +57,20 @@ const blockListener = ({ getState, dispatch }) => {
   );
 };
 
-const blockMiddleware = store => (
-  next => (action) => {
-    next(action);
-    switch (action.type) {
-      case networkActionTypes.networkConfigSet:
-        store.dispatch(olderBlocksRetrieved());
-        blockListener(store);
-        break;
-      case actionTypes.olderBlocksRetrieved:
-        store.dispatch(forgersRetrieved());
-        break;
+const blockMiddleware = (store) => (next) => (action) => {
+  next(action);
+  switch (action.type) {
+    case networkActionTypes.networkConfigSet:
+      store.dispatch(olderBlocksRetrieved());
+      blockListener(store);
+      break;
+    case actionTypes.olderBlocksRetrieved:
+      store.dispatch(forgersRetrieved());
+      break;
 
-      default:
-        break;
-    }
-  });
+    default:
+      break;
+  }
+};
 
 export default blockMiddleware;

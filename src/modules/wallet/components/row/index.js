@@ -5,15 +5,18 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
-// import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
+// import { formatAmountBasedOnLocale } from 'src/modules/common/utilities/formattedNumber';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '../walletVisualWithAddress';
 import styles from './wallet.css';
 
 const getOwnerName = (account) => {
-  const delegateUsername = account.summary?.username ? account.summary?.username : '';
+  const delegateUsername = account.summary?.username
+    ? account.summary?.username
+    : '';
   const text = account.knowledge
-    && account.knowledge.owner && account.knowledge.description
+    && account.knowledge.owner
+    && account.knowledge.description
     ? `${account.knowledge.owner} ${account.knowledge.description}`
     : delegateUsername;
   return text;
@@ -35,7 +38,9 @@ const AccountRow = ({ data, className }) => (
     className={`${grid.row} ${className} accounts-row`}
     to={`${routes.explorer.path}?address=${data.summary?.address}`}
   >
-    <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}>
+    <span
+      className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}
+    >
       {data.rank}
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-5']}`}>
@@ -58,6 +63,7 @@ const AccountRow = ({ data, className }) => (
 );
 
 /* istanbul ignore next */
-const areEqual = (prevProps, nextProps) => (prevProps.data.id === nextProps.data.id);
+const areEqual = (prevProps, nextProps) =>
+  prevProps.data.id === nextProps.data.id;
 
 export default React.memo(AccountRow, areEqual);

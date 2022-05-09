@@ -1,11 +1,7 @@
 import http from 'src/utils/http';
-import {
-  getPeers,
-  getNetworkStatistics,
-  getNetworkStatus,
-} from './lsk';
+import { getPeers, getNetworkStatistics, getNetworkStatus } from './lsk';
 
-jest.mock('@common/utilities/api/http');
+jest.mock('src/modules/common/utilities/api/http');
 
 const setApiResponseData = (data, api) => {
   api.mockImplementation(() => Promise.resolve(data));
@@ -27,14 +23,18 @@ describe('API: LSK Network', () => {
 
     it('should return list of connected peers', async () => {
       const expectedResponse = {
-        data: [{
-          ip: '135.181.46.133',
-          version: '3.0.0-beta.1',
-          height: 449442,
-        }],
+        data: [
+          {
+            ip: '135.181.46.133',
+            version: '3.0.0-beta.1',
+            height: 449442,
+          },
+        ],
       };
       setApiResponseData(expectedResponse, http);
-      await expect(getPeers({ network, params: { version: '3.0' } })).resolves.toEqual(expectedResponse);
+      await expect(
+        getPeers({ network, params: { version: '3.0' } }),
+      ).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
         path: '/api/v2/peers',
@@ -46,7 +46,9 @@ describe('API: LSK Network', () => {
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
       setApiRejection(expectedResponse.message, http);
-      await expect(getPeers({ network, params: {} })).rejects.toEqual(expectedResponse);
+      await expect(getPeers({ network, params: {} })).rejects.toEqual(
+        expectedResponse,
+      );
     });
   });
 
@@ -72,7 +74,9 @@ describe('API: LSK Network', () => {
         },
       };
       setApiResponseData(expectedResponse, http);
-      await expect(getNetworkStatistics({ network })).resolves.toEqual(expectedResponse);
+      await expect(getNetworkStatistics({ network })).resolves.toEqual(
+        expectedResponse,
+      );
       expect(http).toHaveBeenCalledWith({
         path: '/api/v2/network/statistics',
         network,
@@ -82,7 +86,9 @@ describe('API: LSK Network', () => {
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
       setApiRejection(expectedResponse.message, http);
-      await expect(getNetworkStatistics({ network })).rejects.toEqual(expectedResponse);
+      await expect(getNetworkStatistics({ network })).rejects.toEqual(
+        expectedResponse,
+      );
     });
   });
 
@@ -110,27 +116,50 @@ describe('API: LSK Network', () => {
             { id: '5:3', name: 'dpos:reportDelegateMisbehavior' },
             { id: '1000:0', name: 'legacyAccount:reclaimLSK' },
           ],
-          milestone: ['500000000', '400000000', '300000000', '200000000', '100000000'],
+          milestone: [
+            '500000000',
+            '400000000',
+            '300000000',
+            '200000000',
+            '100000000',
+          ],
           rewards: {
             distance: 3000000,
-            milestones: ['500000000', '400000000', '300000000', '200000000', '100000000'],
+            milestones: [
+              '500000000',
+              '400000000',
+              '300000000',
+              '200000000',
+              '100000000',
+            ],
             offset: 2160,
           },
-          registeredModules: ['token', 'sequence', 'keys', 'dpos', 'legacyAccount'],
-
+          registeredModules: [
+            'token',
+            'sequence',
+            'keys',
+            'dpos',
+            'legacyAccount',
+          ],
         },
       };
       setApiResponseData(expectedResponse, http);
-      await expect(getNetworkStatus({ network })).resolves.toEqual(expectedResponse);
-      expect(http).toHaveBeenCalledWith(expect.objectContaining({
-        path: '/api/v2/network/status',
-      }));
+      await expect(getNetworkStatus({ network })).resolves.toEqual(
+        expectedResponse,
+      );
+      expect(http).toHaveBeenCalledWith(
+        expect.objectContaining({
+          path: '/api/v2/network/status',
+        }),
+      );
     });
 
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
       setApiRejection(expectedResponse.message, http);
-      await expect(getNetworkStatus({ network })).rejects.toEqual(expectedResponse);
+      await expect(getNetworkStatus({ network })).rejects.toEqual(
+        expectedResponse,
+      );
     });
   });
 });
