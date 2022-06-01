@@ -163,16 +163,6 @@ const signMessageByHW = async ({
   }
 };
 
-export const getDeviceType = (deviceModel = '') => {
-  if (/ledger/i.test(deviceModel)) {
-    return 'ledgerNano';
-  }
-  if (/trezor/i.test(deviceModel)) {
-    return 'trezor';
-  }
-  return '';
-};
-
 export {
   getNewAccountByIndex,
   checkIfInsideLiskApp,

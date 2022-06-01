@@ -13,7 +13,6 @@ import {
   flattenTransaction,
 } from '@utils/transaction';
 import { extractKeyPair } from '@utils/account';
-import { getTransactionSignatureStatus } from '@screens/signMultiSignTransaction/helpers';
 import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
@@ -245,13 +244,12 @@ export const multisigTransactionSigned = ({
     passphrase: account.passphrase,
     hwInfo: account.hwInfo,
   };
-  const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
 
   const [tx, error] = await signMultisigTransaction(
     rawTransaction,
     activeAccount,
     sender,
-    txStatus,
+    'success',
     network,
   );
 

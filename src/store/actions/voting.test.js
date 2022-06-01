@@ -1,4 +1,4 @@
-import { actionTypes, networks, loginTypes } from '@constants';
+import { actionTypes, networks } from '@constants';
 import * as transactionApi from '@api/transaction';
 import * as delegateApi from '@api/delegate';
 import * as accountApi from '@api/account';
@@ -113,7 +113,6 @@ describe('actions: voting', () => {
 
     it('should call create transactions', async () => {
       const tx = { data: sampleVotes[0] };
-      loginTypes.passphrase.code = 1;
       const data = [{
         address: 'dummy',
         amount: 1e10,

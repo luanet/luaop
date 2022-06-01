@@ -1,7 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { keyCodes } from '@constants';
-import { isValidPassphrase, getPassphraseValidationErrors } from '@utils/passphrase';
 import Icon from '../icon';
 import Input from '../inputs/input';
 import Feedback from '../feedback/feedback';
@@ -82,16 +81,19 @@ class passphraseInput extends React.Component {
     let errorState = { validationError: '', partialPassphraseError: [], passphraseIsInvalid: false };
 
     const passphrase = values.join(' ').trim();
-    if (!isValidPassphrase(passphrase)) {
-      errorState = getPassphraseValidationErrors(values);
-      errorState.passphraseIsInvalid = errorState.validationError === this.props.t('Passphrase is not valid');
-    }
-
     if (!passphrase.length) {
       errorState = {
         ...errorState,
         passphraseIsInvalid: true,
         validationError: this.props.t('Required'),
+      };
+    }
+
+    if (passphrase.length < 6) {
+      errorState = {
+        ...errorState,
+        passphraseIsInvalid: true,
+        validationError: this.props.t('Password must be at least 6 characters'),
       };
     }
 
@@ -152,16 +154,9 @@ class passphraseInput extends React.Component {
             {
               [...Array(inputsLength)].map((x, i) => (
                 <span key={i} className={styles.inputContainer} autoComplete="off">
-                  <span className={[
-                    styles.inputNumber,
-                    partialPassphraseError[i] ? styles.inputNumberError : '',
-                  ].join(' ')}
-                  >
-                    {`${i + 1}. `}
-                  </span>
                   <Input
                     setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
-                    placeholder="_________"
+                    // placeholder="_________"
                     className={[
                       partialPassphraseError[i] || passphraseIsInvalid ? 'error' : '',
                       focus === i ? 'selected' : '',
@@ -176,6 +171,7 @@ class passphraseInput extends React.Component {
                     onKeyDown={this.keyAction}
                     onKeyPress={keyPress}
                     data-index={i}
+                    name={this.props.name}
                   />
                 </span>
               ))

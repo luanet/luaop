@@ -2,6 +2,7 @@ export const networkKeys = {
   mainNet: 'mainnet',
   testNet: 'testnet',
   customNode: 'customNode',
+  api: 'api',
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -21,6 +22,10 @@ const networks = {
 
     // a default value, to keep the object signature consistent
     serviceUrl: 'http://localhost:9901',
+  },
+  [networkKeys.api]: {
+    label: 'Luanet API',
+    serviceUrl: 'http://127.0.0.1:9090',
   },
 };
 

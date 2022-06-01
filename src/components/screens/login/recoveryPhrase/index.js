@@ -7,16 +7,12 @@ import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import styles from '../login.css';
 
 const RecoveryPhrase = ({ t }) => {
-  const { enableCustomDerivationPath, customDerivationPath } = useSelector(selectSettings);
+  const { customDerivationPath } = useSelector(selectSettings);
   const dispatch = useDispatch();
 
   const onPathInputChange = (e) => {
     dispatch(settingsUpdated({ customDerivationPath: e.target.value }));
   };
-
-  if (!enableCustomDerivationPath) {
-    return null;
-  }
 
   return (
     <fieldset>

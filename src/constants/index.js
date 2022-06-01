@@ -1,4 +1,3 @@
-export { default as loginTypes } from './loginTypes';
 export { default as keyCodes } from './keyCodes';
 export * from './moduleAssets';
 export { txStatusTypes, signatureCollectionStatus } from './txStatus';

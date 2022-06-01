@@ -1,4 +1,4 @@
-import { actionTypes, loginTypes } from '@constants';
+import { actionTypes } from '@constants';
 import * as hwManagerApi from '@utils/hwManager';
 import httpApi from '@utils/api/http';
 import * as transactionUtils from '@utils/transaction';
@@ -218,7 +218,6 @@ describe('actions: transactions', () => {
         fee: 141000,
       };
       const transactionError = new Error('Transaction create error');
-      loginTypes.passphrase.code = 1;
       jest.spyOn(hwManagerApi, 'signTransactionByHW')
         .mockRejectedValue(transactionError);
       const expectedAction = {

@@ -19,7 +19,7 @@ const http = ({
   try {
     const url = new URL(baseUrl ? `${baseUrl}${path}`
       : `${network.networks.LSK.serviceUrl}${path}`);
-    url.search = new URLSearchParams(params).toString();
+    if (method === 'GET') url.search = new URLSearchParams(params).toString();
 
     return fetch(url.toString(), {
       method,
@@ -27,6 +27,7 @@ const http = ({
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      body: method === 'POST' || method === 'PUT' ? JSON.stringify(params) : undefined,
       ...restOptions,
     })
       .then(async (response) => {

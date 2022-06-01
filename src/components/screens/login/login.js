@@ -9,19 +9,16 @@ import { getNetworksList } from '@utils/getNetwork';
 import Piwik from '@utils/piwik';
 import { PrimaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
-import Icon from '@toolbox/icon/index';
-import DiscreetModeToggle from '@shared/discreetModeToggle';
-import NetworkSelector from './networkSelector';
-import RecoveryPhrase from './recoveryPhrase';
+import { Input } from '@toolbox/inputs';
 import styles from './login.css';
 
 const RegisterTitle = ({ t }) => (
   <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
     <h1>
-      {t('Sign in with a Passphrase')}
+      {t('Sign in')}
     </h1>
     <p>
-      {t('Don’t have a Lisk account yet? ')}
+      {t('Don’t have an account yet? ')}
       <Link className={styles.link} to={routes.register.path}>
         {t('Create it now')}
       </Link>
@@ -43,9 +40,7 @@ const redirectToReferrer = (history) => {
 const Login = ({
   t, settings, network, history, account, login,
 }) => {
-  const [passphrase, setPass] = useState({ value: '', isValid: false });
-  const canHWSignIn = true;
-
+  const [passphrase, setPass] = useState({ value: '', isValid: true });
   const setPassphrase = (value, error) => {
     setPass({
       value,
@@ -57,7 +52,7 @@ const Login = ({
     e.preventDefault();
     Piwik.trackingEvent('Login', 'button', 'Login submission');
     if (passphrase.value && passphrase.isValid) {
-      login({ passphrase: passphrase.value });
+      login({ id: 'admin@abc123.io', password: 'abc123' });
     }
   };
 
@@ -91,25 +86,23 @@ const Login = ({
           <RegisterTitle t={t} />
           <form onSubmit={onFormSubmit}>
             <div className={styles.inputFields}>
-              {
-                settings.showNetwork ? (
-                  <fieldset>
-                    <label>{t('Network')}</label>
-                    <NetworkSelector />
-                  </fieldset>
-                ) : null
-              }
               <fieldset>
-                <label>{t('Passphrase')}</label>
+                <label>{t('Username')}</label>
+                <Input
+                  name="username"
+                  autoComplete="off"
+                />
+              </fieldset>
+              <fieldset>
+                <label>{t('Password')}</label>
                 <PassphraseInput
-                  inputsLength={12}
+                  name="password"
+                  inputsLength={1}
                   maxInputsLength={24}
                   onFill={setPassphrase}
                   keyPress={handleKeyPress}
                 />
               </fieldset>
-              <RecoveryPhrase t={t} />
-              <DiscreetModeToggle className={styles.discreetMode} />
             </div>
             <div className={`${styles.buttonsHolder}`}>
               <PrimaryButton
@@ -119,18 +112,6 @@ const Login = ({
               >
                 {t('Sign in')}
               </PrimaryButton>
-              {
-                canHWSignIn
-                  ? (
-                    <Link
-                      className={`${styles.hwLink} signin-hwWallet-button`}
-                      to={(routes.hwWallet.path)}
-                    >
-                      <Icon name="hwWalletIcon" className={styles.hwWalletIcon} />
-                      {t('Sign in with a hardware wallet')}
-                    </Link>
-                  ) : null
-              }
             </div>
           </form>
         </div>

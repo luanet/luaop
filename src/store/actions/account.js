@@ -3,7 +3,6 @@ import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import {
   MODULE_ASSETS_NAME_ID_MAP,
-  loginTypes,
   actionTypes,
   tokenMap,
 } from '@constants';
@@ -11,10 +10,12 @@ import { toRawLsk } from '@utils/lsk';
 import { isEmpty } from '@utils/helpers';
 import { create } from '@api/transaction';
 import { selectCurrentBlockHeight } from '@store/selectors';
-import { getAccount, extractAddress as extractBitcoinAddress } from '@api/account';
+import { getAccount } from '@api/account';
+import {
+  login as loginAccount,
+} from '@api/account/luanet';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
-import { extractKeyPair, getUnlockableUnlockObjects } from '@utils/account';
-import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
+import { getUnlockableUnlockObjects } from '@utils/account';
 import { networkStatusUpdated } from './network';
 
 /**
@@ -111,58 +112,21 @@ export const accountDataUpdated = tokensTypes =>
  * @param {String} data.publicKey - Lisk publicKey used for hardware wallet login
  * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
  */
-export const login = ({
-  passphrase, publicKey, hwInfo,
-}) =>
-  async (dispatch, getState) => {
-    const { network, settings } = getState();
-    const { enableCustomDerivationPath, customDerivationPath } = settings;
+export const login = (params) =>
+  async (dispatch) => {
     dispatch(accountLoading());
-
-    const params = Object.keys(settings.token.list)
-      .filter(key => settings.token.list[key])
-      .reduce((acc, token) => {
-        if (token === tokenMap.BTC.key) {
-          acc[token] = {
-            address: extractBitcoinAddress(passphrase, network),
-          };
-        } else {
-          let keyPair = {};
-          if (passphrase) {
-            keyPair = extractKeyPair({
-              passphrase,
-              enableCustomDerivationPath,
-              derivationPath: customDerivationPath || defaultDerivationPath,
-            });
-          } else if (publicKey) {
-            keyPair.publicKey = publicKey;
-          }
-          acc[token] = {
-            ...keyPair,
-          };
-        }
-        return acc;
-      }, {});
-
-    const [error, info] = await to(getAccounts({ network, params }));
-
-    if (error) {
-      toast.error(getConnectionErrorMessage(error));
-      dispatch(accountLoggedOut());
-    } else {
-      const loginType = hwInfo
-        ? ['trezor', 'ledger'].find(item => hwInfo.deviceModel.toLowerCase().indexOf(item) > -1)
-        : 'passphrase';
+    try {
+      const account = await loginAccount({ params });
       dispatch({
         type: actionTypes.accountLoggedIn,
         data: {
-          passphrase,
-          loginType: loginTypes[loginType].code,
-          hwInfo: hwInfo || {},
+          account,
           date: new Date(),
-          info,
         },
       });
+    } catch (error) {
+      toast.error(getConnectionErrorMessage(error));
+      dispatch(accountLoggedOut());
     }
   };
 
