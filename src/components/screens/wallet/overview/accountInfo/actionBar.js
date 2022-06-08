@@ -53,57 +53,24 @@ const MultiSignatureButton = ({
 );
 
 const CopyAddressAndPublicKey = ({
-  address, publicKey, activeToken, t,
-}) => {
-  if (activeToken === tokenMap.BTC.key || !publicKey) {
-    return (
-      <Tooltip
-        className={styles.tooltipWrapper}
-        position="bottom"
-        size="maxContent"
-        content={(
-          <CopyToClipboard
-            value={address}
-            type="icon"
-            copyClassName={styles.copyIcon}
-            className={styles.copyIcon}
-          />
-      )}
-      >
-        <p>{t('Copy address')}</p>
-      </Tooltip>
-    );
-  }
-  return (
-    <Tooltip
-      className={`${styles.tooltipWrapper} ${styles.noPadding}`}
-      position="bottom"
-      size="maxContent"
-      content={<Icon name="copy" className={`${styles.qrCodeIcon} ${styles.white}`} />}
-    >
-      <div className={styles.copyButtonWrapper}>
-        <div className={styles.row}>
-          <span>{t('Copy address')}</span>
-          <CopyToClipboard
-            value={address}
-            copyClassName={styles.copyIcon}
-            className={styles.copyIcon}
-            type="icon"
-          />
-        </div>
-        <div className={styles.row}>
-          <span>{t('Copy public key')}</span>
-          <CopyToClipboard
-            value={publicKey}
-            copyClassName={styles.copyIcon}
-            className={styles.copyIcon}
-            type="icon"
-          />
-        </div>
-      </div>
-    </Tooltip>
-  );
-};
+  address, t,
+}) => (
+  <Tooltip
+    className={styles.tooltipWrapper}
+    position="bottom"
+    size="maxContent"
+    content={(
+      <CopyToClipboard
+        value={address}
+        type="icon"
+        copyClassName={styles.copyIcon}
+        className={styles.copyIcon}
+      />
+  )}
+  >
+    <p>{t('Copy address')}</p>
+  </Tooltip>
+);
 
 // eslint-disable-next-line complexity
 const ActionBar = ({
@@ -117,7 +84,6 @@ const ActionBar = ({
       <div className={styles.helperIcon}>
         <CopyAddressAndPublicKey
           address={address}
-          publicKey={account.summary.publicKey}
           activeToken={activeToken}
           t={t}
         />
@@ -163,11 +129,9 @@ const ActionBar = ({
                 data={username ? {
                   formAddress: address,
                   label: account.dpos?.delegate?.username,
-                  isDelegate: account.summary.isDelegate,
                 } : {
                   formAddress: address,
                   label: bookmark ? bookmark.title : '',
-                  isDelegate: account.summary.isDelegate,
                 }}
               >
                 <BookmarkIcon bookmark={bookmark} />

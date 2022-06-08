@@ -4,7 +4,6 @@ import { getAddressFromBase32Address } from '@utils/account';
 import {
   getTxAmount,
   transformTransaction,
-  containsTransactionType,
   createTransactionObject,
   transactionToJSON,
   removeExcessSignatures,
@@ -279,24 +278,6 @@ describe('API: LSK Transactions', () => {
       };
 
       expect(transformTransaction(tx)).toMatchSnapshot();
-    });
-  });
-
-  describe('containsTransactionType', () => {
-    it('should return true', () => {
-      let pending = [{ moduleAssetId: voteDelegate }];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
-
-      pending = [{ moduleAssetId: transfer }, { moduleAssetId: voteDelegate }];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(true);
-    });
-
-    it('should return false', () => {
-      let pending = [];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
-
-      pending = [{ moduleAssetId: transfer }];
-      expect(containsTransactionType(pending, voteDelegate)).toEqual(false);
     });
   });
 

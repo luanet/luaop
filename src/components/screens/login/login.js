@@ -72,10 +72,10 @@ const Login = ({
   }, []);
 
   useEffect(() => {
-    if (account?.summary?.address) {
+    if (account?.access_token) {
       redirectToReferrer(history);
     }
-  }, [account?.summary?.address]);
+  }, [account?.access_token]);
 
   return (
     <>

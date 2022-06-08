@@ -237,9 +237,9 @@ export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlo
   );
 
 export const isAccountInitialized = account => account
-  && account.info
-  && account.info.LSK
-  && !!account.info.LSK.serverPublicKey;
+  && account.user
+  && account.user.address !== ''
+  && account.access_token;
 
 export const hasEnoughBalanceForInitialization = (balance = 0) =>
   Number(balance) >= balanceNeededForInitialization;

@@ -1,38 +1,18 @@
 import { toast } from 'react-toastify';
 import {
   networks, actionTypes, networkKeys,
-  MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
+  MODULE_ASSETS_NAME_ID_MAP, tokenMap,
   timeOutId, timeOutWarningId,
 } from '@constants';
 import { fromRawLsk, delay } from '@utils/lsk';
 import { getActiveTokenAccount } from '@utils/account';
 import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
-  emptyTransactionsData, transactionsRetrieved, votesRetrieved,
+  emptyTransactionsData, transactionsRetrieved,
 } from '@actions';
 import analytics from '@utils/analytics';
 import { getTransactions } from '@api/transaction';
 import i18n from '../../i18n';
-import history from '../../history';
-
-const getRecentTransactionOfType = (transactionsList, type) => (
-  transactionsList.filter(transaction => (
-    transaction.type === type
-    // limit the number of confirmations to 5 to not fire each time there is another new transaction
-    // theoretically even less then 5, but just to be on the safe side
-    && transaction.confirmations < 5))[0]
-);
-
-const votePlaced = (store, action) => {
-  const voteTransaction = getRecentTransactionOfType(
-    action.data.confirmed,
-    MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-  );
-
-  if (voteTransaction) {
-    store.dispatch(votesRetrieved());
-  }
-};
 
 const filterIncomingTransactions = (transactions, account) =>
   transactions.filter(transaction => (
@@ -111,15 +91,6 @@ const readStoredNetwork = ({ dispatch, getState }) => {
   }
 };
 
-const checkAccountInitializationState = (action) => {
-  if (action.type === actionTypes.accountLoggedIn) {
-    const { isMigrated } = action.data.info.LSK.summary;
-    if (isMigrated === false) { // we need to check against false, check against falsy won't work
-      history.push(routes.reclaim.path);
-    }
-  }
-};
-
 // eslint-disable-next-line complexity
 const accountMiddleware = store => next => async (action) => {
   next(action);
@@ -130,14 +101,10 @@ const accountMiddleware = store => next => async (action) => {
     case actionTypes.newBlockCreated:
       await checkTransactionsAndUpdateAccount(store, action);
       break;
-    case actionTypes.transactionsRetrieved:
-      votePlaced(store, action);
-      break;
     case actionTypes.accountUpdated:
     case actionTypes.accountLoggedIn: {
       toast.dismiss(timeOutId);
       toast.dismiss(timeOutWarningId);
-      checkAccountInitializationState(action);
       break;
     }
     case actionTypes.accountLoggedOut:

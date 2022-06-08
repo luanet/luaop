@@ -15,8 +15,6 @@ import {
 } from '@store/selectors';
 import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
 import Overview from './overview';
-import DelegateTab from './delegateProfile';
-// import MultiSignatureTab from './multiSignature';
 import VotesTab from './votes';
 import Transactions from './transactions';
 
@@ -26,11 +24,7 @@ const Wallet = ({ t, history }) => {
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const { confirmed, pending } = useSelector(selectTransactions);
-  const {
-    isDelegate,
-    address,
-    // isMultisignature,
-  } = account.info[activeToken].summary;
+  const address = account.info.address;
 
   useEffect(() => {
     dispatch(transactionsRetrieved({ address }));
@@ -70,25 +64,6 @@ const Wallet = ({ t, history }) => {
             id="votes"
           />
         ) : null}
-        {isDelegate
-          ? (
-            <DelegateTab
-              tabClassName="delegate-statistics"
-              name={t('Delegate profile')}
-              id="delegateProfile"
-              account={account.info[activeToken]}
-            />
-          )
-          : null}
-        {/* {isMultisignature
-          ? (
-            <MultiSignatureTab
-              // tabClassName="delegate-statistics"
-              name={t('Multisignatures')}
-              id="multiSignatures"
-            />
-          )
-          : null} */}
       </TabsContainer>
     </section>
   );

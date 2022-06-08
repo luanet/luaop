@@ -72,7 +72,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
             host,
             currentBlockHeight,
           }}
-          emptyState={account.passphrase ? NoTransactions : NotSignedIn}
+          emptyState={account.access_token ? NoTransactions : NotSignedIn}
         />
         <div className={styles.viewAll}>
           <Link to={routes.wallet.path} className="view-all">

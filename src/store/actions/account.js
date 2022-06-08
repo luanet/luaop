@@ -120,7 +120,9 @@ export const login = (params) =>
       dispatch({
         type: actionTypes.accountLoggedIn,
         data: {
-          account,
+          access_token: account.access_token,
+          refresh_token: account.refresh_token,
+          info: account.user,
           date: new Date(),
         },
       });

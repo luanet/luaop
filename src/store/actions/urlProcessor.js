@@ -2,7 +2,6 @@ import { parseSearchParams } from '@utils/searchParams';
 import { getAccounts } from '@api/account';
 import { tokenMap, regex } from '@constants';
 import { validateAddress } from '@utils/validators';
-import { voteEdited } from './voting';
 
 const isUsernameValid = username => regex.delegateName.test(username);
 
@@ -56,19 +55,3 @@ const urlProcessor = (search, network) => {
     params: { usernameList: [...votes, ...unvotes] },
   }, tokenMap.LSK.key);
 };
-
-const setVotesByLaunchProtocol = search =>
-  async (dispatch, getState) => {
-    const { network } = getState();
-    const accounts = await urlProcessor(search, network);
-
-    return dispatch(
-      voteEdited(accounts.data
-        .filter(({ summary }) => validateAddress(tokenMap.LSK.key, summary.address) === 0)
-        .map(
-          ({ summary, dpos }) => ({ address: summary.address, username: dpos.delegate.username, amount: '' }),
-        )),
-    );
-  };
-
-export default setVotesByLaunchProtocol;

@@ -1,6 +1,6 @@
 import {
   accountDataUpdated, transactionsRetrieved, settingsUpdated,
-  votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
+  emptyTransactionsData, networkSelected, networkStatusUpdated,
 } from '@actions';
 
 import {
@@ -22,7 +22,6 @@ jest.mock('@actions', () => ({
   accountDataUpdated: jest.fn(),
   transactionsRetrieved: jest.fn(),
   settingsUpdated: jest.fn(),
-  votesRetrieved: jest.fn(),
   emptyTransactionsData: jest.fn(),
   networkSelected: jest.fn(),
   networkStatusUpdated: jest.fn(),
@@ -295,20 +294,6 @@ describe('Account middleware', () => {
             'Your account just received 10 LSK with message Message',
         },
       );
-    });
-  });
-
-  describe('on transactionsRetrieved', () => {
-    it('should dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
-      transactionsRetrievedAction.data.confirmed[0].type = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
-      middleware(store)(next)(transactionsRetrievedAction);
-      expect(votesRetrieved).toHaveBeenCalled();
-    });
-    it('should not dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
-      transactionsRetrievedAction
-        .data.confirmed[0].type = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
-      middleware(store)(next)(transactionsRetrievedAction);
-      expect(votesRetrieved).not.toHaveBeenCalled();
     });
   });
 

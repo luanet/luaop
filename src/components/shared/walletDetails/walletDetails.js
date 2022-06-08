@@ -63,7 +63,7 @@ const WalletDetails = ({
                         isWalletRoute={isWalletRoute}
                         style={styles.lockedBalance}
                         icon="lockedBalance"
-                        account={account.info.LSK}
+                        account="0x0000"
                       />
                     ) : null}
                   </DiscreetMode>

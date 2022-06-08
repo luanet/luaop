@@ -40,7 +40,7 @@ const getOnboardingSlides = (t) => [
 ];
 
 const Dashboard = ({ account, t }) => {
-  const isLoggedIn = !!account?.summary?.address;
+  const isLoggedIn = !!account?.account?.access_token;
   const OnboardingBannerName = 'dashboardOnboarding';
 
   return (

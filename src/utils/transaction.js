@@ -300,9 +300,6 @@ const transactionToJSON = (transaction) => {
   return JSON.stringify(obj);
 };
 
-const containsTransactionType = (txs = [], type) =>
-  txs.some(tx => tx.moduleAssetId === type);
-
 /**
  * Adapts transaction filter params to match transactions API method
  *
@@ -635,7 +632,6 @@ export {
   transactionToJSON,
   flattenTransaction,
   transformTransaction,
-  containsTransactionType,
   createTransactionObject,
   normalizeTransactionParams,
   signMultisigTransaction,

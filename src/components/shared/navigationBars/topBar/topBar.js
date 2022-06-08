@@ -20,7 +20,6 @@ const TopBar = ({
   history,
   network,
   token,
-  noOfVotes,
   location,
 }) => {
   const isUserLogout = isEmpty(account) || account.afterLogout;
@@ -59,7 +58,7 @@ const TopBar = ({
         </Tooltip>
         <VoteQueueToggle
           t={t}
-          noOfVotes={noOfVotes}
+          noOfVotes={0}
           isUserLogout={isUserLogout}
           disabled={disabled}
         />
