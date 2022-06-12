@@ -60,21 +60,16 @@ const Dashboard = ({ account, t }) => {
           show={localStorage.getItem(OnboardingBannerName)}
         />
         <div className={`${styles.main}`}>
+          <div className={`${styles.community} community-feed`}>
+            <NewsFeed />
+          </div>
           <div className={styles.subContainer}>
-            {
-              isLoggedIn
-                ? <WalletDetails className={styles.marginFix} isWalletRoute={false} />
-                : null
-            }
+            <WalletDetails className={styles.marginFix} isWalletRoute={false} />
 
             <RecentTransactions
               className={styles.marginFix}
               isLoggedIn={isLoggedIn}
             />
-          </div>
-
-          <div className={`${styles.community} community-feed`}>
-            <NewsFeed />
           </div>
         </div>
       </div>

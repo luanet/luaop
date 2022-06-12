@@ -99,7 +99,7 @@
     "complexity": ["error", 10],
     "max-depth": ["error", 3],
     "max-nested-callbacks": ["error", 3],
-    "max-statements": ["error", 10],
+    "max-statements": ["error", 20],
     "max-lines": ["error", 300]
   },
   "overrides": [
