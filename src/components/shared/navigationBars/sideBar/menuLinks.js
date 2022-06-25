@@ -50,6 +50,12 @@ const menuLinks = t => ([
   [
     {
       icon: 'multiSignatureOutline',
+      id: 'multiSignature',
+      label: t('MultiSignature'),
+      modal: 'multiSignature',
+    },
+    {
+      icon: 'multiSignatureOutline',
       id: 'signMultiSignTransaction',
       label: t('Sign multisignature transaction'),
       modal: 'signMultiSignTransaction',

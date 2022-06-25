@@ -40,20 +40,20 @@ const redirectToReferrer = (history) => {
 const Login = ({
   t, settings, network, history, account, login,
 }) => {
-  const [passphrase, setPass] = useState({ value: '', isValid: true });
-  const setPassphrase = (value, error) => {
-    setPass({
-      value,
-      isValid: !error,
-    });
+  const [username, setUser] = useState('');
+  const [passphrase, setPass] = useState('');
+  const setPassphrase = (value) => {
+    setPass(value);
+  };
+
+  const setUsername = (e) => {
+    setUser(e.target.value);
   };
 
   const onFormSubmit = (e) => {
     e.preventDefault();
     Piwik.trackingEvent('Login', 'button', 'Login submission');
-    if (passphrase.value && passphrase.isValid) {
-      login({ id: 'admin@abc123.io', password: 'abc123' });
-    }
+    login({ id: username, password: passphrase });
   };
 
   const handleKeyPress = (e) => {
@@ -91,6 +91,7 @@ const Login = ({
                 <Input
                   name="username"
                   autoComplete="off"
+                  onChange={setUsername}
                 />
               </fieldset>
               <fieldset>
@@ -108,7 +109,7 @@ const Login = ({
               <PrimaryButton
                 className={`${styles.button} login-button`}
                 type="submit"
-                disabled={!passphrase.isValid}
+                disabled={!passphrase.length}
               >
                 {t('Sign in')}
               </PrimaryButton>

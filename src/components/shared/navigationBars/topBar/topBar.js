@@ -11,7 +11,7 @@ import Network from './networkName';
 import NavigationButtons from './navigationButtons';
 import Search from './search';
 import Toggle from './toggle';
-import VoteQueueToggle from './voteQueueToggle';
+import NodeSettingToggle from './nodeSettingToggle';
 import SignOut from './signOut';
 
 const TopBar = ({
@@ -56,11 +56,18 @@ const TopBar = ({
         >
           <p>{t('Bookmarks')}</p>
         </Tooltip>
-        <VoteQueueToggle
+        <NodeSettingToggle
           t={t}
           noOfVotes={0}
           isUserLogout={isUserLogout}
-          disabled={disabled}
+          content={(
+            <DialogLink
+              component="bookmarks"
+              className={`${styles.toggle} bookmark-list-toggle ${disabled && `${styles.disabled} disabled`}`}
+            >
+              <Icon name="bookmark" className={styles.bookmarksIcon} />
+            </DialogLink>
+          )}
         />
         <Search t={t} history={history} disabled={disabled} />
       </div>

@@ -19,7 +19,7 @@ const SignedOutTip = ({ t }) => (
   </div>
 );
 
-const VoteQueueToggle = ({
+const NodeSettingToggle = ({
   t, noOfVotes, isUserLogout, disabled,
 }) => (
   <Tooltip
@@ -29,7 +29,7 @@ const VoteQueueToggle = ({
     indent={isUserLogout}
     content={(
       <DialogLink
-        component="votingQueue"
+        component={isUserLogout ? '' : 'setupNode'}
         className={`${styles.toggle} voting-queue-toggle ${disabled && `${styles.disabled} disabled`}`}
       >
         <Icon name="votingQueueInactive" />
@@ -42,4 +42,4 @@ const VoteQueueToggle = ({
   </Tooltip>
 );
 
-export default VoteQueueToggle;
+export default NodeSettingToggle;

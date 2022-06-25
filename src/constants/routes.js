@@ -155,8 +155,8 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  multiSignature: {
-    isPrivate: true,
+  setupNode: {
+    isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   multisigAccountDetails: {

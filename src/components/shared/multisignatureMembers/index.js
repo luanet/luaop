@@ -12,7 +12,7 @@ const Member = ({ member, i, t }) => (
     <div className={styles.memberDetails}>
       <p className={`${styles.memberTitle} member-title`}>
         {member.name || truncateAddress(member.address)}
-        <span>{`(${member.mandatory ? t('Mandatory') : t('Optional')})`}</span>
+        <span>{`(${member.mandatory ? t('LOL') : t('Optional')})`}</span>
       </p>
       <p className={styles.memberKey}>{truncateAddress(member.publicKey)}</p>
     </div>
