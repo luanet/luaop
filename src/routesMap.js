@@ -11,6 +11,7 @@ import Explorer from '@screens/wallet/explorer';
 import SearchBar from '@shared/searchBar';
 import SetupNode from '@screens/setupNode';
 import SignMultiSigTransaction from '@screens/signMultiSignTransaction';
+import MonitorNetwork from '@screens/monitor/network';
 
 export default {
   wallet: Wallet,
@@ -27,4 +28,5 @@ export default {
   search: SearchBar,
   setupNode: SetupNode,
   signMultiSignTransaction: SignMultiSigTransaction,
+  network: MonitorNetwork,
 };
