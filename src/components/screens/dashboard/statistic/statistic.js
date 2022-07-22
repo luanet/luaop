@@ -8,10 +8,9 @@ import BoxContent from '@toolbox/box/content';
 import BoxTabs from '@toolbox/tabs';
 import BoxEmptyState from '@toolbox/box/emptyState';
 import Icon from '@toolbox/icon';
-import News from './news';
-import styles from './newsFeed.css';
+import styles from './statistic.css';
 
-const NewsFeed = (props) => {
+const Statistic = (props) => {
   const {
     newsFeed,
     t,
@@ -287,4 +286,4 @@ const NewsFeed = (props) => {
   );
 };
 
-export default NewsFeed;
+export default Statistic;

@@ -9,16 +9,15 @@ const httpPaths = {
 };
 
 /**
- * Retrieves details of an account with given params
+ * Signup an account
  *
  * @param {Object} data
  * @param {Object} data.network The network config from the Redux store
  * @param {String?} data.baseUrl Custom API URL
  * @param {Object} data.params
- * @param {String?} data.params.username Valid delegate username
- * @param {String?} data.params.address Valid Lisk Address
- * @param {String?} data.params.passphrase Valid Mnemonic passphrase
- * @param {String?} data.params.publicKey Valid Lisk PublicKey
+ * @param {String?} data.params.name Valid delegate name
+ * @param {String?} data.params.email Valid email
+ * @param {String?} data.params.password Valid password
  *
  * @returns {Promise}
  */
@@ -41,16 +40,14 @@ export const signup = async ({
 };
 
 /**
- * Retrieves details of an account with given params
+ * Login
  *
  * @param {Object} data
  * @param {Object} data.network The network config from the Redux store
  * @param {String?} data.baseUrl Custom API URL
  * @param {Object} data.params
- * @param {String?} data.params.username Valid delegate username
- * @param {String?} data.params.address Valid Lisk Address
- * @param {String?} data.params.passphrase Valid Mnemonic passphrase
- * @param {String?} data.params.publicKey Valid Lisk PublicKey
+ * @param {String?} data.params.id Valid login id
+ * @param {String?} data.params.password Valid password
  *
  * @returns {Promise}
  */
@@ -58,14 +55,6 @@ export const signup = async ({
 export const login = async ({
   params,
 }) => {
-  // eslint-disable-next-line no-console
-  console.log({
-    baseUrl: networks.api.serviceUrl,
-    path: httpPaths.login,
-    params,
-    method: 'POST',
-  });
-
   const response = await http({
     baseUrl: networks.api.serviceUrl,
     path: httpPaths.login,
@@ -78,4 +67,34 @@ export const login = async ({
   }
 
   throw Error('Login failed!');
+};
+
+/**
+ * Get access token
+ *
+ * @param {Object} data
+ * @param {Object} data.network The network config from the Redux store
+ * @param {String?} data.baseUrl Custom API URL
+ * @param {Object} data.params
+ * @param {String?} data.params.id Valid login id
+ * @param {String?} data.params.refresh_token Valid refresh token
+ *
+ * @returns {Promise}
+ */
+// eslint-disable-next-line complexity, max-statements
+export const token = async ({
+  params,
+}) => {
+  const response = await http({
+    baseUrl: networks.api.serviceUrl,
+    path: httpPaths.token,
+    params,
+    method: 'POST',
+  });
+
+  if (response.access_token) {
+    return response.access_token;
+  }
+
+  throw Error('Generate access token failed!');
 };

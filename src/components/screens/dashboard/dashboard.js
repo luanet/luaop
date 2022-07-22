@@ -4,7 +4,7 @@ import React from 'react';
 import WalletDetails from '@shared/walletDetails';
 import Onboarding from '@toolbox/onboarding/onboarding';
 import InfoBanner from '@toolbox/infoBanner/infoBanner';
-import NewsFeed from './newsFeed';
+import Statistic from './statistic';
 import RecentTransactions from './recentTransactions';
 import styles from './dashboard.css';
 
@@ -61,7 +61,7 @@ const Dashboard = ({ account, t }) => {
         />
         <div className={`${styles.main}`}>
           <div className={`${styles.community} community-feed`}>
-            <NewsFeed />
+            <Statistic />
           </div>
           <div className={styles.subContainer}>
             <WalletDetails className={styles.marginFix} isWalletRoute={false} />

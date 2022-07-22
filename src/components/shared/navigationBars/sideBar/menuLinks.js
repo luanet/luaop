@@ -14,63 +14,11 @@ const menuLinks = t => ([
       label: t('Wallet'),
       path: routes.wallet.path,
     },
-  ],
-  [
     {
       icon: 'networkMonitor',
       id: 'network',
       label: t('Network'),
       path: routes.network.path,
-    },
-    {
-      icon: 'transactionsMonitor',
-      id: 'transactions',
-      label: t('Transactions'),
-      path: routes.transactions.path,
-    },
-    {
-      icon: 'blocksMonitor',
-      id: 'blocks',
-      label: t('Blocks'),
-      path: routes.blocks.path,
-    },
-    {
-      icon: 'accountsMonitor',
-      id: 'accounts',
-      label: t('Accounts'),
-      path: routes.accounts.path,
-    },
-    {
-      icon: 'delegatesMonitor',
-      id: 'delegates',
-      label: t('Delegates'),
-      path: routes.delegates.path,
-    },
-  ],
-  [
-    {
-      icon: 'multiSignatureOutline',
-      id: 'multiSignature',
-      label: t('MultiSignature'),
-      modal: 'multiSignature',
-    },
-    {
-      icon: 'multiSignatureOutline',
-      id: 'signMultiSignTransaction',
-      label: t('Sign multisignature transaction'),
-      modal: 'signMultiSignTransaction',
-    },
-    {
-      icon: 'signMessage',
-      id: 'signMessage',
-      label: t('Sign message'),
-      modal: 'signMessage',
-    },
-    {
-      icon: 'verifyMessage',
-      id: 'verifyMessage',
-      label: t('Verify message'),
-      modal: 'verifyMessage',
     },
   ],
   [

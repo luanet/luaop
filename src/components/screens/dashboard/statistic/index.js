@@ -2,7 +2,7 @@
 import { withTranslation } from 'react-i18next';
 import { getNews } from '@api/market';
 import withData from '@utils/withData';
-import NewsFeed from './newsFeed';
+import Statistic from './statistic';
 
 export default withData({
   newsFeed: {
@@ -11,4 +11,4 @@ export default withData({
     defaultData: [],
     transformResponse: response => response.data,
   },
-})(withTranslation()(NewsFeed));
+})(withTranslation()(Statistic));
