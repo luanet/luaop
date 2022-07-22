@@ -14,7 +14,12 @@ import { routes } from '@constants';
 import NavigationBars from '@shared/navigationBars';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DialogHolder from '@toolbox/dialog/holder';
-import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@actions';
+import {
+  settingsRetrieved,
+  accountsRetrieved,
+  bookmarksRetrieved,
+  watchListRetrieved,
+} from '@actions';
 import routesMap from '../routesMap';
 import ThemeContext from '../contexts/theme';
 import styles from './app.css';
@@ -31,6 +36,7 @@ const App = ({ history }) => {
   useEffect(() => {
     setLoaded(true);
     dispatch(bookmarksRetrieved());
+    dispatch(accountsRetrieved());
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
   }, []);

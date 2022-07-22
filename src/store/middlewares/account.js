@@ -12,6 +12,7 @@ import {
 } from '@actions';
 import analytics from '@utils/analytics';
 import { getTransactions } from '@api/transaction';
+import { setInStorage } from '@utils/localJSONStorage';
 import i18n from '../../i18n';
 
 const filterIncomingTransactions = (transactions, account) =>
@@ -105,6 +106,8 @@ const accountMiddleware = store => next => async (action) => {
     case actionTypes.accountLoggedIn: {
       toast.dismiss(timeOutId);
       toast.dismiss(timeOutWarningId);
+
+      setInStorage('accounts', store.getState().account);
       break;
     }
     case actionTypes.accountLoggedOut:
@@ -112,6 +115,7 @@ const accountMiddleware = store => next => async (action) => {
       the Lisk monitoring features are available and Lisk is selected on the next login */
       store.dispatch(settingsUpdated({ token: { active: tokenMap.LSK.key } }));
       store.dispatch(emptyTransactionsData());
+      setInStorage('accounts', {});
       break;
     case actionTypes.settingsUpdated:
       if (action.data.token && store.getState().account.info) {

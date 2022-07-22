@@ -38,7 +38,7 @@ const redirectToReferrer = (history) => {
 };
 
 const Login = ({
-  t, settings, network, history, account, login,
+  t, settings, network, history, account, login, accountsUpdated,
 }) => {
   const [username, setUser] = useState('');
   const [passphrase, setPass] = useState('');
@@ -73,6 +73,7 @@ const Login = ({
 
   useEffect(() => {
     if (account?.access_token) {
+      accountsUpdated(account);
       redirectToReferrer(history);
     }
   }, [account?.access_token]);

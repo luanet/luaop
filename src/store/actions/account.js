@@ -16,7 +16,32 @@ import {
 } from '@api/account/luanet';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
 import { getUnlockableUnlockObjects } from '@utils/account';
+import { getFromStorage } from '@utils/localJSONStorage';
 import { networkStatusUpdated } from './network';
+
+/**
+ * An action to dispatch accountsRetrieved
+ *
+ */
+export const accountsRetrieved = () => (dispatch) => {
+  getFromStorage('accounts', {}, (data) => {
+    dispatch({
+      type: actionTypes.accountsRetrieved,
+      data: {
+        ...data,
+      },
+    });
+  });
+};
+
+/**
+ * An action to dispatch accountsUpdated
+ *
+ */
+export const accountsUpdated = data => ({
+  type: actionTypes.accountUpdated,
+  data,
+});
 
 /**
  * Trigger this action to log out of the account
