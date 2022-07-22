@@ -19,8 +19,6 @@ const account = (state = {}, action) => {
     case actionTypes.accountLoggedIn:
       return {
         ...action.data,
-        expireTime: new Date(action.data.date.getTime() + accountConstants.lockDuration),
-        votes: state.votes,
       };
     case actionTypes.accountLoggedOut:
       return {

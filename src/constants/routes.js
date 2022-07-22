@@ -68,7 +68,7 @@ export default {
   },
   network: {
     path: '/network',
-    isPrivate: false,
+    isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   delegates: {
@@ -84,7 +84,7 @@ export default {
   },
   dashboard: {
     path: '/',
-    isPrivate: false,
+    isPrivate: true,
     forbiddenTokens: [],
     exact: true,
   },

@@ -2,7 +2,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-import { getActiveTokenAccount } from '@utils/account';
 import Piwik from '@utils/piwik';
 import { routes } from '@constants';
 import Login from '@screens/login';
@@ -25,7 +24,6 @@ const CustomRoute = ({
   t,
   history,
 }) => {
-  const account = useSelector(state => getActiveTokenAccount(state));
   const settings = useSelector(state => state.settings);
   const isAuthenticated = useSelector(state =>
     (state.account.access_token));
@@ -44,13 +42,6 @@ const CustomRoute = ({
         to={`${routes.login.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(/^\?/, '')}`}
       />
     );
-  }
-
-  if (account.info?.LSK?.summary?.isMigrated === false
-    && history.location.pathname !== routes.reclaim.path
-    && history.location.pathname !== routes.login.path
-    && isAuthenticated) {
-    return <Redirect to={`${routes.reclaim.path}`} />;
   }
 
   return (

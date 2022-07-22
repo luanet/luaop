@@ -124,6 +124,7 @@ export const login = (params) =>
           refresh_token: account.refresh_token,
           info: account.user,
           date: new Date(),
+          expire_time: account.expire_time,
         },
       });
     } catch (error) {
