@@ -13,7 +13,7 @@
  */
 
 const http = ({
-  baseUrl, path, params, method = 'GET', network, ...restOptions
+  baseUrl, path, params, method = 'GET', network, accessToken, ...restOptions
   // eslint-disable-next-line consistent-return
 }) => {
   try {
@@ -21,12 +21,18 @@ const http = ({
       : `${network.networks.LSK.serviceUrl}${path}`);
     if (method === 'GET') url.search = new URLSearchParams(params).toString();
 
+    const headers = accessToken ? {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    } : {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+
     return fetch(url.toString(), {
       method,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: method === 'POST' || method === 'PUT' ? JSON.stringify(params) : undefined,
       ...restOptions,
     })

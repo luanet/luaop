@@ -1,14 +1,18 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
-import { getNews } from '@api/market';
 import withData from '@utils/withData';
+import { stats } from '@api/account/luanet';
 import Statistic from './statistic';
 
 export default withData({
-  newsFeed: {
-    autoload: false,
-    apiUtil: (network, params) => getNews({ network, params }),
+  chartData: {
+    apiUtil: (network, { accessToken, nodeId }) => stats({ accessToken, nodeId }),
+    getApiParams: (state) => ({
+      accessToken: state.account.access_token,
+      nodeId: '12D3KooWAQhqoQEZNzZsy1DDNLs2ihymB27UPhVE4B6yFb8BSTSf',
+    }),
     defaultData: [],
-    transformResponse: response => response.data,
+    autoload: true,
+    transformResponse: response => response,
   },
 })(withTranslation()(Statistic));

@@ -16,7 +16,7 @@ import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import DialogHolder from '@toolbox/dialog/holder';
 import {
   settingsRetrieved,
-  accountsRetrieved,
+  getAccountInfos,
   bookmarksRetrieved,
   watchListRetrieved,
 } from '@actions';
@@ -36,7 +36,7 @@ const App = ({ history }) => {
   useEffect(() => {
     setLoaded(true);
     dispatch(bookmarksRetrieved());
-    dispatch(accountsRetrieved());
+    dispatch(getAccountInfos());
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
   }, []);

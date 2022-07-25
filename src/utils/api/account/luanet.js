@@ -93,8 +93,24 @@ export const token = async ({
   });
 
   if (response.access_token) {
-    return response.access_token;
+    return response;
   }
 
   throw Error('Generate access token failed!');
 };
+
+/**
+ * Get node stats
+ *
+ * @param {Object} data
+ * @param {Object} data.nodeId Identity of this node
+ *
+ * @returns {Promise}
+ */
+// eslint-disable-next-line complexity, max-statements
+export const stats = (params) => http({
+  baseUrl: networks.api.serviceUrl,
+  path: `${httpPaths.node}/${params.nodeId}/stats`,
+  method: 'GET',
+  accessToken: params.accessToken,
+});

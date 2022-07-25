@@ -23,7 +23,7 @@ import { networkStatusUpdated } from './network';
  * An action to dispatch accountsRetrieved
  *
  */
-export const accountsRetrieved = () => (dispatch) => {
+export const getAccountInfos = () => (dispatch) => {
   getFromStorage('accounts', {}, (data) => {
     dispatch({
       type: actionTypes.accountsRetrieved,
@@ -35,11 +35,13 @@ export const accountsRetrieved = () => (dispatch) => {
 };
 
 /**
- * An action to dispatch accountsUpdated
+ * Trigger this action to log out of the account
+ * while already logged in
  *
+ * @returns {Object} - Action object
  */
-export const accountsUpdated = data => ({
-  type: actionTypes.accountUpdated,
+export const accountTokenUpdated = data => ({
+  type: actionTypes.accountTokenUpdated,
   data,
 });
 

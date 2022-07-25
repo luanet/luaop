@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { setDefaults, withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@utils/account';
-import { login, settingsUpdated, accountsUpdated } from '@actions';
+import { login, settingsUpdated } from '@actions';
 import Login from './login';
 
 setDefaults({
@@ -23,7 +23,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   login,
   settingsUpdated,
-  accountsUpdated,
 };
 
 export default connect(

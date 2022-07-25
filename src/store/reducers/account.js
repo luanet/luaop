@@ -1,16 +1,6 @@
 import { actionTypes, account as accountConstants } from '@constants';
 
 /**
- * Function to validate that the active token is enabled on the settings, otherwise
- * sets the default token to LSK.
- * @param {Object} state
- * @returns {Object} -> state with correct active token.
- */
-const validateToken = state => (
-  state
-);
-
-/**
  *
  * @param {Array} state
  * @param {Object} action
@@ -19,13 +9,17 @@ const validateToken = state => (
 const account = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.accountsRetrieved: {
-      return validateToken(action.data);
+      return action.data;
     }
+    case actionTypes.accountTokenUpdated:
+      return {
+        ...state,
+        ...action.data,
+      };
     case actionTypes.accountUpdated:
       return {
         ...state,
         info: {
-          ...state.info,
           ...action.data,
         },
       };

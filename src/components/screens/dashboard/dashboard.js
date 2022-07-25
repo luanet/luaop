@@ -61,7 +61,7 @@ const Dashboard = ({ account, t }) => {
         />
         <div className={`${styles.main}`}>
           <div className={`${styles.community} community-feed`}>
-            <Statistic />
+            <Statistic accessToken={account.access_token} />
           </div>
           <div className={styles.subContainer}>
             <WalletDetails className={styles.marginFix} isWalletRoute={false} />
