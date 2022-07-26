@@ -81,12 +81,13 @@
 }
 
 .titleHolder {
+  flex-basis: 25% !important;
   max-height: fit-content;
+  height: 20px !important;
   color: var(--color-content);
   font-family: var(--heading-font);
   text-align: center;
   margin: 10px 0;
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: end;
@@ -142,4 +143,28 @@
 .link {
   color: var(--color-link-active);
   cursor: pointer;
+}
+
+.inputFields {
+  & > fieldset {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: none;
+    text-align: left;
+
+    & > label {
+      margin-bottom: 7px;
+      color: var(--color-maastricht-blue);
+    }
+  }
+
+  & > * {
+    max-width: 665px;
+    margin: 30px auto 0px;
+  }
+
+  & > .discreetMode {
+    margin-top: 16px;
+  }
 }

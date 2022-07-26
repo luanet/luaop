@@ -1,5 +1,4 @@
 import React from 'react';
-import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
 import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
@@ -9,7 +8,7 @@ class PassphraseRenderer extends React.Component {
   constructor(props) {
     super(props);
     this.values = props.passphrase.split(' ');
-    const initialIndexes = [2, 9];
+    const initialIndexes = [0, 1, 2, 3, 4, 5];
 
     this.state = {
       indexes: initialIndexes,
@@ -33,7 +32,7 @@ class PassphraseRenderer extends React.Component {
 
     const answers = Object.values(chosenWords);
     const isCorrect = answers.filter((answer, index) => answer === this.values[indexes[index]])
-      .length === 2;
+      .length === 6;
 
     const cb = isCorrect
       ? this.props.nextStep
@@ -48,7 +47,7 @@ class PassphraseRenderer extends React.Component {
   }
 
   setRandomIndexesFromPassphrase() {
-    const numberOfMissingWords = 2;
+    const numberOfMissingWords = 6;
     let idxs = this.values.map((w, index) => index);
     const indexes = [...Array(numberOfMissingWords)]
       .map(() => {
@@ -70,23 +69,9 @@ class PassphraseRenderer extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   assembleWordOptions(values, missing) {
-    const wordsList = fillWordsList.filter(word => !values.includes(word));
-    const numberOfOptions = 3;
-
-    const mixWithMissingWords = options =>
-      options.reduce((accumulator, item, listIndex) => {
-        const rand = Math.floor(Math.random() * 0.99 * item.length);
-        item[rand] = values[missing[listIndex]];
-        accumulator[missing[listIndex]] = item;
-        return accumulator;
-      }, {});
-
-    const wordOptions = [...Array(missing.length)].map(() =>
-      [...Array(numberOfOptions)].map(
-        () => wordsList[Math.floor(Math.random() * wordsList.length)],
-      ));
-
-    return mixWithMissingWords(wordOptions);
+    const wordsList = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const wordOptions = [...Array(missing.length)].map(() => wordsList);
+    return wordOptions;
   }
 
   getStyle(i, missingWords) {
@@ -123,8 +108,8 @@ class PassphraseRenderer extends React.Component {
 
   chooseWord(selectedIndex, option) {
     const { chosenWords, indexes } = this.state;
-    const otherIndex = indexes.find(index => index !== selectedIndex);
-    const shouldDisplayOptions = Object.values(chosenWords).length < 2;
+    const otherIndex = indexes.find(index => index > selectedIndex);
+    const shouldDisplayOptions = Object.values(chosenWords).length < 6;
 
     this.setState({
       ...this.state,
@@ -151,7 +136,7 @@ class PassphraseRenderer extends React.Component {
           <>
             <h2 className={styles.header}>{t('Passphrase')}</h2>
             <p className={styles.subheader}>
-              {t('Please carefully write down these 12 words and store them in a safe place.')}
+              {t('Please carefully write down these 6 OTP numbers.')}
             </p>
           </>
         )}
@@ -163,7 +148,7 @@ class PassphraseRenderer extends React.Component {
                 className={`${grid['col-xs-2']} ${styles.inputContainer}`}
                 key={i}
               >
-                <span className={`${styles.inputValue} ${this.getStyle(i, missingWordsIndexes)} word`}>
+                <span className={`${this.getStyle(i, missingWordsIndexes)} word`}>
                   {isConfirmation && missingWordsIndexes.includes(i)
                     ? this.renderMissingValue(i)
                     : value}
@@ -188,7 +173,7 @@ class PassphraseRenderer extends React.Component {
           <PrimaryButton
             className={[styles.confirmBtn, 'confirm'].join(' ')}
             onClick={this.handleConfirm}
-            disabled={Object.keys(chosenWords).length < 2}
+            disabled={Object.keys(chosenWords).length < 6}
           >
             {t('Confirm')}
           </PrimaryButton>

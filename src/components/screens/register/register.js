@@ -1,11 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { generatePassphrase } from '@utils/passphrase';
-import { extractAddressFromPassphrase } from '@utils/account';
-import { routes } from '@constants';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
 import MultiStep from '@shared/registerMultiStep';
-import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
@@ -15,38 +11,46 @@ class Register extends React.Component {
   constructor() {
     super();
     this.state = {
-      accounts: [],
-      selectedAccount: {},
+      account: {},
     };
 
-    this.handleSelectAvatar = this.handleSelectAvatar.bind(this);
+    this.setEmail = this.setEmail.bind(this);
+    this.setPassword = this.setPassword.bind(this);
+    this.setConfirmPassword = this.setConfirmPassword.bind(this);
   }
 
-  componentDidMount() {
-    const passphrases = [...Array(5)].map(generatePassphrase);
-    const accounts = passphrases.map(pass => ({
-      address: extractAddressFromPassphrase(pass),
-      passphrase: pass,
-    }));
+  setEmail(e) {
+    const { account } = this.state;
     this.setState({
-      accounts,
+      account: {
+        ...account,
+        email: e.target.value,
+      },
     });
   }
 
-  componentDidUpdate() {
-    const { account, token, history } = this.props;
-    if (account?.info?.[token.active].address) {
-      history.push(routes.dashboard.path);
-    }
+  setPassword(value) {
+    const { account } = this.state;
+    this.setState({
+      account: {
+        ...account,
+        password: value,
+      },
+    });
   }
 
-  /* istanbul ignore next */
-  handleSelectAvatar(selectedAccount) {
-    this.setState({ selectedAccount });
+  setConfirmPassword(value) {
+    const { account } = this.state;
+    this.setState({
+      account: {
+        ...account,
+        confirmPassword: value,
+      },
+    });
   }
 
   render() {
-    const { accounts, selectedAccount } = this.state;
+    const { account } = this.state;
     return (
       <>
         <div className={`${grid.row} ${styles.register}`}>
@@ -54,20 +58,16 @@ class Register extends React.Component {
             navStyles={{ multiStepWrapper: styles.wrapper }}
             progressBar={MultiStepProgressBar}
           >
-            <ChooseAvatar
-              accounts={accounts}
-              selected={selectedAccount}
-              handleSelectAvatar={this.handleSelectAvatar}
-            />
             <BackupPassphrase
-              account={selectedAccount}
+              setEmail={this.setEmail}
+              setPassword={this.setPassword}
+              setConfirmPassword={this.setConfirmPassword}
             />
             <ConfirmPassphrase
-              account={selectedAccount}
-              passphrase={selectedAccount.passphrase}
+              account={account}
             />
             <AccountCreated
-              account={selectedAccount}
+              account={account}
             />
           </MultiStep>
         </div>

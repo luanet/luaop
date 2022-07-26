@@ -6,20 +6,20 @@ import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
 
 const ConfirmPassphrase = ({
-  t, passphrase, prevStep, nextStep,
+  t, account, prevStep, nextStep,
 }) => (
   <>
     <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
       <h1>
-        {t('Confirm your passphrase')}
+        {t('Confirm your OTP')}
       </h1>
-      <p className={styles.text}>{t('Keep it safe as it is the only way to access your wallet.')}</p>
+      <p className={styles.text}>{t('We have sent an OTP to your email.')}</p>
     </div>
 
     <div className={`${grid['col-sm-10']} ${styles.passphraseContainer}`}>
       <PassphraseRenderer
         showInfo
-        passphrase={passphrase}
+        passphrase="1 2 3 4 5 6"
         nextStep={nextStep}
         prevStep={prevStep}
         isConfirmation

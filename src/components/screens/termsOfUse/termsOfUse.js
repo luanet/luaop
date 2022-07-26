@@ -44,12 +44,12 @@ class TermsOfUse extends React.Component {
           <Icon name="liskLogo" />
         </header>
         <div className={styles.content}>
-          <h1>{this.props.t('Lisk Terms of Use')}</h1>
+          <h1>{this.props.t('Terms of Use')}</h1>
           <p>
-            {this.props.t('Before you continue using Lisk, please read and accept the')}
+            {this.props.t('Before you continue using Luanet, please read and accept the')}
             <a
               onClick={this.checkTermsOfUse}
-              href="https://lisk.com/terms-conditions"
+              href="https://luanet.io/terms-conditions"
               target="_blank"
               rel="noopener noreferrer"
             >

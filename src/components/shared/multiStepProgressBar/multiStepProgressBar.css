@@ -10,9 +10,11 @@
 
   & .active {
     background-color: var(--color-ultramarine-blue);
+    height: 2px !important;
   }
 
   & .inactive {
     background-color: var(--color-ghost);
+    height: 2px !important;
   }
 }
