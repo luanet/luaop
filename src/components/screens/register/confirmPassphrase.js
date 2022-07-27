@@ -6,7 +6,7 @@ import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
 
 const ConfirmPassphrase = ({
-  t, account, prevStep, nextStep,
+  t, account, setOtp, prevStep, nextStep,
 }) => (
   <>
     <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
@@ -22,6 +22,8 @@ const ConfirmPassphrase = ({
         passphrase="1 2 3 4 5 6"
         nextStep={nextStep}
         prevStep={prevStep}
+        account={account}
+        setOtp={setOtp}
         isConfirmation
       />
     </div>

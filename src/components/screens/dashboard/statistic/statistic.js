@@ -13,7 +13,6 @@ import styles from './statistic.css';
 
 const Statistic = (props) => {
   const {
-    accessToken,
     chartData,
     t,
   } = props;

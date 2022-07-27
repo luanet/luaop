@@ -7,6 +7,8 @@ import styles from './passphraseRenderer.css';
 class PassphraseRenderer extends React.Component {
   constructor(props) {
     super(props);
+    this.otp = props.otp;
+    this.setOtp = props.setOtp;
     this.values = props.passphrase.split(' ');
     const initialIndexes = [0, 1, 2, 3, 4, 5];
 
@@ -28,12 +30,8 @@ class PassphraseRenderer extends React.Component {
   }
 
   handleConfirm() {
-    const { chosenWords, indexes } = this.state;
-
-    const answers = Object.values(chosenWords);
-    const isCorrect = answers.filter((answer, index) => answer === this.values[indexes[index]])
-      .length === 6;
-
+    const { chosenWords } = this.state;
+    const isCorrect = Object.keys(chosenWords).length === 6;
     const cb = isCorrect
       ? this.props.nextStep
       : this.setRandomIndexesFromPassphrase;
@@ -42,6 +40,10 @@ class PassphraseRenderer extends React.Component {
       isCorrect,
       hasErrors: !isCorrect,
     });
+
+    if (isCorrect) {
+      this.setOtp(chosenWords)
+    };
 
     this.timeout = setTimeout(cb, 1500);
   }
@@ -170,6 +172,12 @@ class PassphraseRenderer extends React.Component {
         </div>
         {isConfirmation && (
         <div className={`${styles.confirmPassphraseFooter} ${footerStyle}`}>
+          <TertiaryButton
+            className={styles.editBtn}
+            onClick={prevStep}
+          >
+            {t('Resend')}
+          </TertiaryButton>
           <PrimaryButton
             className={[styles.confirmBtn, 'confirm'].join(' ')}
             onClick={this.handleConfirm}

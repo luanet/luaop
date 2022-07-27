@@ -3,8 +3,8 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
 import MultiStep from '@shared/registerMultiStep';
 import BackupPassphrase from './backupPassphrase';
-import ConfirmPassphrase from './confirmPassphrase';
-import AccountCreated from './accountCreated';
+import CreateAccount from './createAccount';
+import ConfirmOtp from './confirmOtp';
 import styles from './register.css';
 
 class Register extends React.Component {
@@ -17,6 +17,7 @@ class Register extends React.Component {
     this.setEmail = this.setEmail.bind(this);
     this.setPassword = this.setPassword.bind(this);
     this.setConfirmPassword = this.setConfirmPassword.bind(this);
+    this.setOtp = this.setOtp.bind(this);
   }
 
   setEmail(e) {
@@ -49,6 +50,16 @@ class Register extends React.Component {
     });
   }
 
+  setOtp(value) {
+    const { account } = this.state;
+    this.setState({
+      account: {
+        ...account,
+        otp: parseInt(Object.values(value).join("")),
+      },
+    });
+  }
+
   render() {
     const { account } = this.state;
     return (
@@ -63,10 +74,11 @@ class Register extends React.Component {
               setPassword={this.setPassword}
               setConfirmPassword={this.setConfirmPassword}
             />
-            <ConfirmPassphrase
+            <CreateAccount
               account={account}
+              setOtp={this.setOtp}
             />
-            <AccountCreated
+            <ConfirmOtp
               account={account}
             />
           </MultiStep>
