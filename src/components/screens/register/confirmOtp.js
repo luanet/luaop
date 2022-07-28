@@ -8,10 +8,10 @@ export default withData({
   accountInfo: {
     apiUtil: (network, { otp }) => confirmOtp({ otp }),
     getApiParams: (state, props) => ({
-      otp: props.account.otp
+      otp: props.account.otp,
     }),
     defaultData: {},
     autoload: true,
-    transformResponse: response => response.data,
+    transformResponse: response => response,
   },
 })(withTranslation()(AccountCreated));

@@ -11,8 +11,8 @@ export default withData({
       email: props.account.email,
       password: props.account.password,
     }),
-    defaultData: -1,
+    defaultData: {},
     autoload: true,
-    transformResponse: response => response.data,
+    transformResponse: response => response,
   },
 })(withTranslation()(ConfirmPassphrase));

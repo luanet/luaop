@@ -19,3 +19,9 @@
   margin: 0;
   color: var(--color-slate-gray);
 }
+
+.warning {
+  width: 475px !important;
+  margin-bottom: 32px;
+  color: red !important;
+}

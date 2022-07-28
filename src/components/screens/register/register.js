@@ -55,7 +55,7 @@ class Register extends React.Component {
     this.setState({
       account: {
         ...account,
-        otp: parseInt(Object.values(value).join("")),
+        otp: parseInt(Object.values(value).join(''), 10),
       },
     });
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
+import { resendOtp } from '@api/account/luanet';
 import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
 import styles from './passphraseRenderer.css';
 
@@ -9,6 +10,7 @@ class PassphraseRenderer extends React.Component {
     super(props);
     this.otp = props.otp;
     this.setOtp = props.setOtp;
+    this.account = props.account;
     this.values = props.passphrase.split(' ');
     const initialIndexes = [0, 1, 2, 3, 4, 5];
 
@@ -19,10 +21,12 @@ class PassphraseRenderer extends React.Component {
       options: this.assembleWordOptions(this.values, initialIndexes),
       isCorrect: false,
       hasErrors: false,
+      isResendOtp: false,
     };
 
     this.handleConfirm = this.handleConfirm.bind(this);
     this.setRandomIndexesFromPassphrase = this.setRandomIndexesFromPassphrase.bind(this);
+    this.requestOtp = this.requestOtp.bind(this);
   }
 
   componentWillUnmount() {
@@ -42,8 +46,8 @@ class PassphraseRenderer extends React.Component {
     });
 
     if (isCorrect) {
-      this.setOtp(chosenWords)
-    };
+      this.setOtp(chosenWords);
+    }
 
     this.timeout = setTimeout(cb, 1500);
   }
@@ -123,12 +127,27 @@ class PassphraseRenderer extends React.Component {
     });
   }
 
+  requestOtp() {
+    resendOtp({ email: this.account.email });
+    this.setState({
+      ...this.state,
+      isResendOtp: true,
+    });
+
+    setInterval(() => {
+      this.setState({
+        ...this.state,
+        isResendOtp: false,
+      });
+    }, 30000);
+  }
+
   render() {
     const {
       t, showInfo, isConfirmation, prevStep, footerStyle,
     } = this.props;
     const {
-      options, fieldSelected, chosenWords,
+      options, fieldSelected, chosenWords, isResendOtp,
     } = this.state;
     const missingWordsIndexes = isConfirmation && Object.keys(options).map(k => Number(k));
 
@@ -174,7 +193,8 @@ class PassphraseRenderer extends React.Component {
         <div className={`${styles.confirmPassphraseFooter} ${footerStyle}`}>
           <TertiaryButton
             className={styles.editBtn}
-            onClick={prevStep}
+            onClick={this.requestOtp}
+            disabled={isResendOtp}
           >
             {t('Resend')}
           </TertiaryButton>

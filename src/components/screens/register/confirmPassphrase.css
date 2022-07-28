@@ -27,6 +27,12 @@
   margin-bottom: 32px;
 }
 
+.warning {
+  width: 475px !important;
+  margin-bottom: 32px;
+  color: red !important;
+}
+
 .passphraseContainer {
   margin-bottom: 40px;
 }

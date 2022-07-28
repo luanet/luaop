@@ -4,6 +4,7 @@ import http from '../http';
 const httpPaths = {
   signup: '/auth/signup',
   otp: '/auth/otp',
+  resendOtp: '/auth/otp/resend',
   login: '/auth/login',
   token: '/auth/token',
   node: '/node',
@@ -31,11 +32,7 @@ export const signup = async (params) => {
     method: 'POST',
   });
 
-  if (response.data[0]) {
-    return response.data[0];
-  }
-
-  throw Error('Create new account failed!');
+  return response;
 };
 
 /**
@@ -56,6 +53,31 @@ export const confirmOtp = async (params) => {
   const response = await http({
     baseUrl: networks.api.serviceUrl,
     path: httpPaths.otp,
+    params,
+    method: 'POST',
+  });
+
+  return response;
+};
+
+/**
+ * Reset Otp
+ *
+ * @param {Object} data
+ * @param {Object} data.network The network config from the Redux store
+ * @param {String?} data.baseUrl Custom API URL
+ * @param {Object} data.params
+ * @param {String?} data.params.name Valid delegate name
+ * @param {String?} data.params.email Valid email
+ * @param {String?} data.params.password Valid password
+ *
+ * @returns {Promise}
+ */
+// eslint-disable-next-line complexity, max-statements
+export const resendOtp = async (params) => {
+  const response = await http({
+    baseUrl: networks.api.serviceUrl,
+    path: httpPaths.resendOtp,
     params,
     method: 'POST',
   });
@@ -86,11 +108,7 @@ export const login = async ({
     method: 'POST',
   });
 
-  if (response.access_token) {
-    return response;
-  }
-
-  throw Error('Login failed!');
+  return response;
 };
 
 /**
@@ -116,11 +134,7 @@ export const token = async ({
     method: 'POST',
   });
 
-  if (response.access_token) {
-    return response;
-  }
-
-  throw Error('Generate access token failed!');
+  return response;
 };
 
 /**
