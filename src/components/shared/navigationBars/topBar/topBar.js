@@ -5,7 +5,6 @@ import { isEmpty } from '@utils/helpers';
 import Icon from '@toolbox/icon';
 import DialogLink from '@toolbox/dialog/link';
 import { PrimaryButton } from '@toolbox/buttons';
-import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
@@ -41,21 +40,6 @@ const TopBar = ({
           icons={['toggleSidebarActive', 'toggleSidebar']}
           tips={[t('Collapse sidebar'), t('Expand sidebar')]}
         />
-        <Tooltip
-          className={styles.tooltipWrapper}
-          size="maxContent"
-          position="bottom"
-          content={(
-            <DialogLink
-              component="bookmarks"
-              className={`${styles.toggle} bookmark-list-toggle ${disabled && `${styles.disabled} disabled`}`}
-            >
-              <Icon name="bookmark" className={styles.bookmarksIcon} />
-            </DialogLink>
-          )}
-        >
-          <p>{t('Bookmarks')}</p>
-        </Tooltip>
         <NodeSettingToggle
           t={t}
           noOfVotes={0}

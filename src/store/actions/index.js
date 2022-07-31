@@ -1,6 +1,5 @@
 export * from './account';
 export * from './blocks';
-export * from './bookmarks';
 export * from './loading';
 export * from './network';
 export * from './service';

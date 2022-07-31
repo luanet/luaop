@@ -95,10 +95,6 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  bookmarks: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   send: {
     isPrivate: true,
     forbiddenTokens: [],

@@ -6,14 +6,12 @@ import loading from './loadingBar';
 import hwManager from './hwManager';
 import block from './block';
 import settings from './settings';
-import bookmarks from './bookmarks';
 import network from './network';
 import watchList from './watchList';
 
 export default [
   spy,
   account,
-  bookmarks,
   hwManager,
   loading,
   network,

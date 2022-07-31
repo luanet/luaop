@@ -1,6 +1,5 @@
 export { default as accounts } from './accounts';
 export { default as blocks } from './blocks';
-export { default as bookmarks } from './bookmarks';
 export { default as delegates } from './delegates';
 export { default as networks } from './networks';
 export { default as peers } from './peers';

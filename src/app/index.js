@@ -17,7 +17,6 @@ import DialogHolder from '@toolbox/dialog/holder';
 import {
   settingsRetrieved,
   getAccountInfos,
-  bookmarksRetrieved,
   watchListRetrieved,
 } from '@actions';
 import routesMap from '../routesMap';
@@ -35,7 +34,6 @@ const App = ({ history }) => {
 
   useEffect(() => {
     setLoaded(true);
-    dispatch(bookmarksRetrieved());
     dispatch(getAccountInfos());
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
