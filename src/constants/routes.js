@@ -159,10 +159,6 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  signMultiSignTransaction: {
-    isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
   delegatePerformance: {
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
