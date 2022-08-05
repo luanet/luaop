@@ -1,6 +1,6 @@
 const selectAccount = state => state.account;
-const selectActiveToken = state => state.settings.token.active;
-const selectAddress = state => state.account.info[state.settings.token.active].address;
+const selectActiveToken = () => 'LAU';
+const selectAddress = state => state.account.info.address;
 const selectLSKAddress = state =>
   (state.account.info ? state.account.info.LSK.summary.address : undefined);
 const selectBTCAddress = state =>
@@ -18,7 +18,7 @@ const selectActiveTokenAccount = (state) => {
   };
 };
 const selectAccountBalance = state => (
-  state.account.info ? state.account.info[state.settings.token.active].summary.balance : undefined);
+  state.account.info ? state.account.info.balance : undefined);
 const selectBookmarks = state => state.bookmarks[state.settings.token.active];
 const selectBookmark = (state, address) =>
   state.bookmarks[state.settings.token.active].find(item => (item.address === address));

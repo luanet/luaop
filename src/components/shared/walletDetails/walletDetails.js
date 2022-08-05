@@ -12,11 +12,10 @@ import Converter from '@shared/converter';
 import { fromRawLsk } from '@utils/lsk';
 import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
-import LockedBalanceLink from '../../screens/wallet/overview/balanceInfo/unlocking';
 import styles from './walletDetails.css';
 
 const WalletDetails = ({
-  t, account, settings, className, isWalletRoute,
+  t, account, settings, className,
 }) => {
   const dispatch = useDispatch();
   const tokens = Object.entries(account.info || {}).filter(
@@ -57,15 +56,6 @@ const WalletDetails = ({
                         />
                       </div>
                     </div>
-                    {token === tokenMap.LSK.key ? (
-                      <LockedBalanceLink
-                        activeToken={token}
-                        isWalletRoute={isWalletRoute}
-                        style={styles.lockedBalance}
-                        icon="lockedBalance"
-                        account="0x0000"
-                      />
-                    ) : null}
                   </DiscreetMode>
                 </div>
               </div>

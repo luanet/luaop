@@ -6,6 +6,7 @@ import i18n from '../../../i18n';
 const timestampConverters = {
   LSK: timestamp => timestamp * 1000,
   BTC: timestamp => timestamp,
+  LAU: timestamp => timestamp,
 };
 
 export const Time = withTranslation()((props) => {

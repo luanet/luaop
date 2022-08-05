@@ -64,7 +64,7 @@ const Dashboard = ({ account, t }) => {
             <Statistic accessToken={account.access_token} />
           </div>
           <div className={styles.subContainer}>
-            <WalletDetails className={styles.marginFix} isWalletRoute={false} />
+            <WalletDetails className={styles.marginFix} />
 
             <RecentTransactions
               className={styles.marginFix}

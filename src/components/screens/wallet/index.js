@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 
-import { parseSearchParams, addSearchParamsToUrl } from '@utils/searchParams';
 import { withRouter } from 'react-router';
 import { transactionsRetrieved } from '@actions';
 import {
@@ -15,13 +14,12 @@ import {
 } from '@store/selectors';
 import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
 import Overview from './overview';
-import VotesTab from './votes';
 import Transactions from './transactions';
 
-const Wallet = ({ t, history }) => {
+const Wallet = ({ t }) => {
+  const activeToken = useSelector(selectActiveToken);
   const dispatch = useDispatch();
   const account = useSelector(selectAccount);
-  const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const { confirmed, pending } = useSelector(selectTransactions);
   const address = account.info.address;
@@ -30,21 +28,12 @@ const Wallet = ({ t, history }) => {
     dispatch(transactionsRetrieved({ address }));
   }, [confirmed.length]);
 
-  useEffect(() => {
-    const params = parseSearchParams(history.location.search);
-    if (params.recipient !== undefined) {
-      addSearchParamsToUrl(history, { modal: 'send' });
-    }
-  }, []);
-
   return (
     <section>
       <Overview
-        isWalletRoute
-        activeToken={activeToken}
         discreetMode={discreetMode}
-        account={account.info[activeToken]}
-        transactions={confirmed}
+        account={account.info}
+        activeToken={activeToken}
       />
       <TabsContainer name="main-tabs">
         <Transactions
@@ -52,18 +41,10 @@ const Wallet = ({ t, history }) => {
           confirmedLength={confirmed.length}
           activeToken={activeToken}
           discreetMode={discreetMode}
-          name={t('Transactions')}
+          name={t('Payout')}
           id="Transactions"
           address={address}
         />
-        {activeToken !== 'BTC' ? (
-          <VotesTab
-            history={history}
-            address={address}
-            name={t('Votes')}
-            id="votes"
-          />
-        ) : null}
       </TabsContainer>
     </section>
   );
