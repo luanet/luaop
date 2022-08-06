@@ -3,6 +3,7 @@ export const networkKeys = {
   testNet: 'testnet',
   customNode: 'customNode',
   api: 'api',
+  node: 'node',
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -26,6 +27,10 @@ const networks = {
   [networkKeys.api]: {
     label: 'Luanet API',
     serviceUrl: 'http://127.0.0.1:9090',
+  },
+  [networkKeys.node]: {
+    label: 'IPFS Node API',
+    serviceUrl: 'http://127.0.0.1:5001',
   },
 };
 

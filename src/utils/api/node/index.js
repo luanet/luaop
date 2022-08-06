@@ -10,10 +10,8 @@ import http from '../http';
  * @returns {Promise}
  */
 // eslint-disable-next-line complexity, max-statements
-export default ({ accessToken, params }) => http({
-  baseUrl: networks.api.serviceUrl,
-  path: '/payout',
-  method: 'GET',
-  accessToken,
-  params,
+export default () => http({
+  baseUrl: networks.node.serviceUrl,
+  path: '/api/v0/stats/bw',
+  method: 'POST',
 });

@@ -65,6 +65,17 @@
     width: 100%;
   }
 
+  & .balanceClaim {
+    @mixin headingNormalIntermediate normal;
+
+    color: var(--color-maastricht-blue);
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
   & .fiatValue {
     @mixin contentLargest normal;
 

@@ -1,6 +1,9 @@
 @import '../../../../app/mixins.css';
 
 .wrapper {
+  margin-top: 25px;
+  margin-bottom: 25px;
+
   & > header {
     justify-content: flex-end !important;
     padding: 0 !important;
@@ -10,6 +13,36 @@
       margin-top: -70px;
     }
   }
+}
+
+.payout,
+.claim,
+.bonus {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--border-radius-standard);
+  display: inline-block;
+  padding: 6px 12px;
+  box-sizing: border-box;
+  line-height: initial;
+  text-align: right;
+}
+
+.payout {
+  background-color: rgba(43, 214, 123, 0.15);
+  color: var(--color-deep-green);
+}
+
+.bonus {
+  background-color: var(--color-active-tab);
+  color: var(--color-dark-blue);
+}
+
+.claim {
+  background-color: var(--color-pale-pink);
+  color: var(--color-ink-blue);
 }
 
 .sortingColumn {

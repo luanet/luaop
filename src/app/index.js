@@ -39,6 +39,10 @@ const App = ({ history }) => {
     dispatch(watchListRetrieved());
   }, []);
 
+  setInterval(() => {
+    dispatch(getAccountInfos());
+  }, 15000);
+
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find(r => r.path === history.location.pathname) || {};
 

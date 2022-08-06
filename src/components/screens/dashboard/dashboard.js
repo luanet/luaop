@@ -6,6 +6,7 @@ import Onboarding from '@toolbox/onboarding/onboarding';
 import InfoBanner from '@toolbox/infoBanner/infoBanner';
 import Statistic from './statistic';
 import RecentTransactions from './recentTransactions';
+import NodeBandwidthChart from '../status/nodeBandwidthChart';
 import styles from './dashboard.css';
 
 const getOnboardingSlides = (t) => [
@@ -62,6 +63,7 @@ const Dashboard = ({ account, t }) => {
         <div className={`${styles.main}`}>
           <div className={`${styles.community} community-feed`}>
             <Statistic accessToken={account.access_token} />
+            <NodeBandwidthChart />
           </div>
           <div className={styles.subContainer}>
             <WalletDetails className={styles.marginFix} />

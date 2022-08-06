@@ -25,7 +25,6 @@ const Transactions = ({
   t,
   address,
 }) => {
-  console.log(transactions);
   useEffect(() => {
     // This will automatically load the new data too.
     clearAllFilters();

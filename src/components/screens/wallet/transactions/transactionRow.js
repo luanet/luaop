@@ -4,6 +4,7 @@ import { DateTimeFromTimestamp } from '@toolbox/timestamp';
 import NodeAddress from '@shared/nodeAddress';
 import PayoutAmount from '@shared/payoutAmount';
 import DialogLink from '@toolbox/dialog/link';
+import styles from './transactions.css';
 
 const TransactionRow = ({
   data, activeToken, t, host, className,
@@ -11,7 +12,7 @@ const TransactionRow = ({
   <DialogLink
     className={`${grid.row} ${className} transactions-row`}
     component=""
-    data={''}
+    data=""
   >
     <span className={grid['col-xs-4']}>
       <NodeAddress
@@ -23,7 +24,9 @@ const TransactionRow = ({
       <DateTimeFromTimestamp time={data.date} token={activeToken} />
     </span>
     <span className={grid['col-xs-3']}>
-      {data.type.charAt(0).toUpperCase() + data.type.slice(1)}
+      <span className={styles[data.type]}>
+        {data.type.charAt(0).toUpperCase() + data.type.slice(1)}
+      </span>
     </span>
     <span className={grid['col-xs-2']}>
       <PayoutAmount

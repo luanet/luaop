@@ -13,7 +13,6 @@ import {
   selectTransactions,
 } from '@store/selectors';
 import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
-import Overview from './overview';
 import Transactions from './transactions';
 
 const Wallet = ({ t }) => {
@@ -30,11 +29,6 @@ const Wallet = ({ t }) => {
 
   return (
     <section>
-      <Overview
-        discreetMode={discreetMode}
-        account={account.info}
-        activeToken={activeToken}
-      />
       <TabsContainer name="main-tabs">
         <Transactions
           pending={pending || []}
