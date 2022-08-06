@@ -170,7 +170,6 @@ class NodeBandwidthChart extends React.Component {
   }
 
   componentDidMount() {
-    // Setup tooltip
     const { chartData } = this.props;
     this.tooltip = document.createElement('div');
     this.tooltip.id = 'node_bw_chart';
