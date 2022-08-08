@@ -29,15 +29,10 @@ class passphraseInput extends React.Component {
   }
 
   keyAction(event) {
-    let { focus, inputsLength } = this.state;
+    let { focus } = this.state;
+    const { inputsLength } = this.state;
     const index = parseInt(event.target.dataset.index, 10);
-    if (event.which === keyCodes.space
-      || event.which === keyCodes.arrowRight
-      || event.which === keyCodes.tab) {
-      inputsLength = index + 1 > inputsLength - 1 ? this.props.maxInputsLength : inputsLength;
-      focus = index + 1 > inputsLength - 1 ? index : index + 1;
-      event.preventDefault();
-    }
+
     if ((event.which === keyCodes.delete && !this.state.values[focus])
       || event.which === keyCodes.arrowLeft) {
       focus = index - 1 < 0 ? index : index - 1;
