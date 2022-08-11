@@ -5,7 +5,6 @@ import {
 } from './constants';
 import * as ledger from './index';
 
-jest.mock('@liskhq/lisk-client');
 jest.mock('@hirishh/lisk-ledger.js', () => ({
   LedgerAccount: () => ({
     derivePath: () => Buffer.from(''),

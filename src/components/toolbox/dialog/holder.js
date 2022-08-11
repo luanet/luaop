@@ -17,7 +17,6 @@ const DialogHolder = ({ history }) => {
   }, [history.location.search]);
 
   const settings = useSelector(state => state.settings);
-  const networkIsSet = useSelector(state => !!state.network.name);
   const isAuthenticated = useSelector(state =>
     (state.account.info && state.account.info[settings.token.active]));
 
@@ -40,10 +39,6 @@ const DialogHolder = ({ history }) => {
   }
 
   if (modals[modalName].forbiddenTokens.includes(settings.token.active)) {
-    return null;
-  }
-
-  if (!networkIsSet && modals[modalName].isPrivate) {
     return null;
   }
 

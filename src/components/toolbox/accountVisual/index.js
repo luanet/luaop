@@ -2,8 +2,6 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
 import generateUniqueId from '@utils/generateUniqueId';
-import { tokenMap } from '@constants';
-import { validateAddress } from '@utils/validators';
 import { Gradients, gradientSchemes } from './gradients';
 import styles from './accountVisual.css';
 
@@ -221,7 +219,7 @@ class AccountVisual extends React.Component {
 
   render() {
     const {
-      address, size, className, placeholder,
+      size, className, placeholder,
     } = this.props;
 
     if (placeholder) {
@@ -233,9 +231,6 @@ class AccountVisual extends React.Component {
       );
     }
 
-    if (validateAddress(tokenMap.LSK.key, address) === 1 && !(/^[1-9]\d{0,19}L$/.test(address))) {
-      return null;
-    }
     const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(size);
 
     return (

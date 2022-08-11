@@ -7,7 +7,7 @@ import TopBar from './topBar';
 
 const mapStateToProps = state => ({
   account: state.account,
-  network: state.network,
+  network: state.network ? state.network : {},
   token: state.settings.token,
   settings: state.settings,
 });

@@ -1,4 +1,4 @@
-import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@actions';
+import { pricesRetrieved, settingsUpdated } from '@actions';
 import { actionTypes } from '@constants';
 import settingsMiddleware from './settings';
 
@@ -73,7 +73,6 @@ describe('Middleware: Settings', () => {
       };
 
       settingsMiddleware(store)(next)(action);
-      expect(emptyTransactionsData).toBeCalled();
     });
   });
 });

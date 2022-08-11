@@ -7,7 +7,6 @@ import store from '@store';
 import externalLinks from '@utils/externalLinks';
 import updateApp from '@utils/updateApp';
 import ipcLocale from '@utils/ipcLocale';
-import { cryptography } from '@liskhq/lisk-client';
 import i18n from './i18n';
 import App from './app';
 
@@ -22,8 +21,6 @@ if (PRODUCTION) {
 }
 
 if (!PRODUCTION) {
-  window.cryptography = cryptography;
-
   const whyDidYouRender = require('@welldone-software/why-did-you-render');
   whyDidYouRender(React);
 }

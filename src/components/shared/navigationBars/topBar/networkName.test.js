@@ -1,5 +1,4 @@
 import React from 'react';
-// import Lisk from '@liskhq/lisk-client';
 import { mount } from 'enzyme';
 import Network from './networkName';
 

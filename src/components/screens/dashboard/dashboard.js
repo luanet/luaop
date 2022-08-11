@@ -5,7 +5,6 @@ import WalletDetails from '@shared/walletDetails';
 import Onboarding from '@toolbox/onboarding/onboarding';
 import InfoBanner from '@toolbox/infoBanner/infoBanner';
 import Statistic from './statistic';
-import RecentTransactions from './recentTransactions';
 import NodeBandwidthChart from '../status/nodeBandwidthChart';
 import styles from './dashboard.css';
 
@@ -41,7 +40,6 @@ const getOnboardingSlides = (t) => [
 ];
 
 const Dashboard = ({ account, t }) => {
-  const isLoggedIn = !!account?.account?.access_token;
   const OnboardingBannerName = 'dashboardOnboarding';
 
   return (
@@ -67,11 +65,6 @@ const Dashboard = ({ account, t }) => {
           </div>
           <div className={styles.subContainer}>
             <WalletDetails className={styles.marginFix} />
-
-            <RecentTransactions
-              className={styles.marginFix}
-              isLoggedIn={isLoggedIn}
-            />
           </div>
         </div>
       </div>

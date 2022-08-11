@@ -3,7 +3,6 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withFilters from '@utils/withFilters';
 import withData from '@utils/withData';
-import { normalizeTransactionParams } from '@utils/transaction';
 import getPayout from '@api/payout/luanet';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
@@ -90,7 +89,7 @@ export default compose(
   withData({
     transactions: {
       apiUtil: (network, { accessToken, ...params }) =>
-        getPayout({ accessToken, params: normalizeTransactionParams(params) }),
+        getPayout({ accessToken, params }),
       getApiParams: (state, { sort }) => ({
         accessToken: state.account.access_token,
         sort,

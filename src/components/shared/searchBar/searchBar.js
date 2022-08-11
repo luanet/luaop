@@ -4,10 +4,7 @@ import { routes, keyCodes } from '@constants';
 import { addSearchParamsToUrl } from '@utils/searchParams';
 import { Input } from '@toolbox/inputs';
 import Accounts from './accounts';
-import Delegates from './delegates';
-import Transactions from './transactions';
 import styles from './searchBar.css';
-import Blocks from './blocks';
 
 class SearchBar extends React.Component {
   constructor() {
@@ -121,7 +118,7 @@ class SearchBar extends React.Component {
   render() {
     const { searchTextValue, rowItemIndex } = this.state;
     const {
-      t, suggestions, setSearchBarRef, activeToken,
+      t, suggestions, setSearchBarRef,
     } = this.props;
     const isSearchTextError = searchTextValue.length && searchTextValue.length < 3;
     const isEmptyResults = !suggestions.isLoading && !suggestions.data.addresses.length
@@ -160,45 +157,6 @@ class SearchBar extends React.Component {
                 onSelectedRow={this.onSelectAccount}
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}
-                t={t}
-              />
-            )
-            : null
-        }
-        {
-          suggestions.data.delegates.length
-            ? (
-              <Delegates
-                searchTextValue={searchTextValue}
-                delegates={suggestions.data.delegates}
-                onSelectedRow={this.onSelectDelegateAccount}
-                rowItemIndex={rowItemIndex}
-                updateRowItemIndex={this.updateRowItemIndex}
-                t={t}
-              />
-            )
-            : null
-        }
-        {
-          suggestions.data.transactions.length
-            ? (
-              <Transactions
-                transactions={suggestions.data.transactions}
-                onSelectedRow={this.onSelectTransaction}
-                rowItemIndex={rowItemIndex}
-                updateRowItemIndex={this.updateRowItemIndex}
-                t={t}
-                activeToken={activeToken}
-              />
-            )
-            : null
-        }
-        {
-          suggestions.data.blocks.length
-            ? (
-              <Blocks
-                blocks={suggestions.data.blocks}
-                onSelectedRow={this.onSelectBlock}
                 t={t}
               />
             )

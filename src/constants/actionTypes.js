@@ -1,5 +1,4 @@
 const actionTypes = {
-  emptyTransactionsData: 'EMPTY_TRANSACTIONS_DATA',
   pendingTransactionAdded: 'PENDING_TRANSACTION_ADDED',
   getTransactions: 'GET_TRANSACTIONS',
   getTransactionsSuccess: 'GET_TRANSACTIONS_SUCCESS',
@@ -72,7 +71,6 @@ const actionTypes = {
   broadcastedTransactionError: 'BROADCASTED_TRANSACTION_ERROR',
   forgersRetrieved: 'FORGERS_RETRIEVED',
   appUpdateAvailable: 'APP_UPDATE_AVAILABLE',
-  transactionsRetrieved: 'TRANSACTION_RETRIEVED',
 };
 
 export default actionTypes;

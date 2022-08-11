@@ -146,7 +146,6 @@ module.exports = {
     'src/components/shared/navigationBars/topBar/tokenSelector.js',
     'src/store/middlewares/block.js',
     'src/utils/getNetwork.js',
-    'src/utils/api/block/index.js',
     'src/utils/api/transaction/lsk.js',
     'src/utils/transaction.js',
     'src/components/shared/filterDropdownButton/addressFilter.js',

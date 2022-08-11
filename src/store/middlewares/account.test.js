@@ -1,6 +1,6 @@
 import {
-  accountDataUpdated, transactionsRetrieved, settingsUpdated,
-  emptyTransactionsData, networkSelected, networkStatusUpdated,
+  settingsUpdated,
+  networkSelected, networkStatusUpdated,
 } from '@actions';
 
 import {
@@ -15,14 +15,10 @@ jest.mock('../../history');
 
 jest.mock('@api/transaction', () => ({
   getTransactions: jest.fn(),
-  emptyTransactionsData: jest.fn(),
 }));
 
 jest.mock('@actions', () => ({
-  accountDataUpdated: jest.fn(),
-  transactionsRetrieved: jest.fn(),
   settingsUpdated: jest.fn(),
-  emptyTransactionsData: jest.fn(),
   networkSelected: jest.fn(),
   networkStatusUpdated: jest.fn(),
 }));
@@ -81,16 +77,6 @@ const transactions = [
 const block = {
   numberOfTransactions: 2,
   id: '513008230952104224',
-};
-
-const transactionsRetrievedAction = {
-  type: actionTypes.transactionsRetrieved,
-  data: {
-    confirmed: [{
-      type: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
-      confirmations: 1,
-    }],
-  },
 };
 
 const newBlockCreated = {
@@ -250,11 +236,6 @@ describe('Account middleware', () => {
 
       // Assert
       expect(transactionApi.getTransactions).toHaveBeenCalledWith({ network: expect.anything(), params: expect.anything() }, 'BTC');
-      expect(accountDataUpdated).toHaveBeenCalled();
-      expect(transactionsRetrieved).toHaveBeenCalledWith({
-        address: btcAddress,
-        filters: undefined,
-      });
     });
 
     it('should call account LSK API methods when LSK is the active token', async () => {
@@ -263,11 +244,6 @@ describe('Account middleware', () => {
 
       // Assert
       expect(transactionApi.getTransactions).toHaveBeenCalledWith({ network: expect.anything(), params: expect.anything() }, 'LSK');
-      expect(accountDataUpdated).toHaveBeenCalled();
-      expect(transactionsRetrieved).toHaveBeenCalledWith({
-        address: expect.anything(),
-        filters: undefined,
-      });
     });
 
     it('should not dispatch when getTransactions returns invalid transaction', async () => {
@@ -278,10 +254,6 @@ describe('Account middleware', () => {
 
       // Act
       await middleware(store)(next)(newBlockCreated);
-
-      // Assert
-      expect(accountDataUpdated).toHaveBeenCalledTimes(0);
-      expect(transactionsRetrieved).toHaveBeenCalledTimes(0);
     });
 
     it.skip('should show Notification on incoming transaction', () => {
@@ -313,7 +285,6 @@ describe('Account middleware', () => {
       expect(settingsUpdated).toHaveBeenCalledWith(
         { token: { active: tokenMap.LSK.key } },
       );
-      expect(emptyTransactionsData).toHaveBeenCalled();
     });
   });
 

@@ -1,18 +1,10 @@
 import React from 'react';
 
-import { networkKeys } from '@constants';
-import { getNetworkName } from '@utils/getNetwork';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './network.css';
 
-const Network = ({ network, t, token }) => {
-  const networksList = {
-    [networkKeys.mainNet]: t('Mainnet').toLowerCase(),
-    [networkKeys.testNet]: t('Testnet').toLowerCase(),
-    [networkKeys.customNode]: t('Devnet').toLowerCase(),
-  };
-  const activeNetwork = getNetworkName(network);
-  const statusColor = network.status.online ? styles.online : styles.offline;
+const Network = ({ network, t }) => {
+  const statusColor = network.online ? styles.online : styles.offline;
 
   return (
     <section className={styles.wrapper}>
@@ -24,16 +16,10 @@ const Network = ({ network, t, token }) => {
           size="maxContent"
           position="bottom left"
           content={(
-            <span className="network-name">{networksList[activeNetwork]}</span>
+            <span className="network-name">{t('Mainnet').toLowerCase()}</span>
           )}
         >
-          <p className="network-address">
-            {
-              network.networks
-                ? network.networks[token]?.serviceUrl
-                : '-'
-            }
-          </p>
+          <p className="network-address">-</p>
         </Tooltip>
       </div>
     </section>

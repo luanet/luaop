@@ -1,7 +1,6 @@
 import { parseSearchParams } from '@utils/searchParams';
 import { getAccounts } from '@api/account';
 import { tokenMap, regex } from '@constants';
-import { validateAddress } from '@utils/validators';
 
 const isUsernameValid = username => regex.delegateName.test(username);
 
