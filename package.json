@@ -43,8 +43,7 @@
     "analyze:bundles": "webpack  --config ./config/webpack.config.analyze",
     "copy:files": "cpx \"./src/{index.html,assets/**/*}\" ./app/build/",
     "clean:build": "rm -rf app/build",
-    "clean:dist": "rm -rf dist",
-    "preinstall": "npx npm-force-resolutions"
+    "clean:dist": "rm -rf dist"
   },
   "resolutions": {
     "elliptic": "^6.5.4",
