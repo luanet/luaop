@@ -29,26 +29,6 @@ describe('Middleware: Settings', () => {
     });
   });
 
-  describe('on networkConfigSet', () => {
-    it('should dispatch pricesRetrieved', () => {
-      const action = {
-        type: actionTypes.networkConfigSet,
-        data: {
-          name: 'customNode',
-          networks: {
-            LSK: {
-              serviceUrl: 'http://test.io',
-            },
-          },
-        },
-      };
-
-      settingsMiddleware(store)(next)(action);
-      expect(pricesRetrieved).toBeCalled();
-      expect(settingsUpdated).toBeCalled();
-    });
-  });
-
   describe('on settingsUpdated', () => {
     it('should not dispatch pricesRetrieved', () => {
       const action = {

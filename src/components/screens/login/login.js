@@ -64,7 +64,7 @@ const Login = ({
 
   useEffect(() => {
     // istanbul ignore else
-    if (!settings.areTermsOfUseAccepted && network.networks?.LSK) {
+    if (!settings.areTermsOfUseAccepted) {
       history.push(routes.termsOfUse.path);
     }
 

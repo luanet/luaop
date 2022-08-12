@@ -17,8 +17,7 @@ const http = ({
   // eslint-disable-next-line consistent-return
 }) => {
   try {
-    const url = new URL(baseUrl ? `${baseUrl}${path}`
-      : `${network.networks.LSK.serviceUrl}${path}`);
+    const url = new URL(`${baseUrl}${path}`);
     if (method === 'GET') url.search = new URLSearchParams(params).toString();
 
     const headers = accessToken ? {
