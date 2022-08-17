@@ -85,6 +85,7 @@ const config = {
     ],
   },
   optimization: {
+    minimize: false,
     splitChunks: {
       chunks: 'all',
     },

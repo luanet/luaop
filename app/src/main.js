@@ -15,9 +15,8 @@ import i18nSetup from '../../i18n/i18n-setup';
 import { storage, setConfig, readConfig } from './modules/storage';
 import { hwM } from './modules/hwManager';
 import { setupDaemon } from './daemon';
-// import setupTray from './tray';
+import { setupTray } from './tray';
 
-// setupTray();
 setupDaemon({});
 hwM.listening();
 i18nSetup();
@@ -76,6 +75,8 @@ app.on('ready', () => {
   if (process.platform === 'win32') {
     app.setAppUserModelId('io.lisk.hub');
   }
+
+  setupTray({});
 });
 
 app.on('window-all-closed', () => {

@@ -38,7 +38,7 @@ const redirectToReferrer = (history) => {
 };
 
 const Login = ({
-  t, settings, network, history, account, login,
+  t, settings, history, account, login,
 }) => {
   const [username, setUser] = useState('');
   const [passphrase, setPass] = useState('');

@@ -13,6 +13,7 @@ const config = {
     filename: 'bundle.[name].[contenthash].js',
   },
   optimization: {
+    minimize: false,
     moduleIds: 'named',
     minimizer: [new TerserPlugin({ test: /\.js(\?.*)?$/i })],
     runtimeChunk: 'single',
