@@ -7,8 +7,6 @@ import { accountLoggedOut } from '@actions';
 import Icon from '@toolbox/icon';
 import DialogLink from '@toolbox/dialog/link';
 import styles from './sideBar.css';
-import AutoSignOut from './autoSignOut';
-import WarningAutoSignOut from './autoSignOut/warning';
 import menuLinks from './menuLinks';
 
 const Inner = ({
@@ -65,31 +63,6 @@ const getWarningTime = (expireTime) => {
   return new Date(expireTimeInMilliseconds - diff);
 };
 
-const AutoSignOutWrapper = () => {
-  const dispatch = useDispatch();
-  const expireTime = useSelector(state => state.account.expireTime);
-  const warningTime = getWarningTime(expireTime);
-  const autoSignOut = useSelector(state => state.settings.autoLog);
-  const renderAutoSignOut = autoSignOut && expireTime;
-
-  if (!renderAutoSignOut) {
-    return null;
-  }
-
-  return (
-    <div className={styles.signOutContainer}>
-      <AutoSignOut
-        expireTime={expireTime}
-        onCountdownComplete={() => dispatch(accountLoggedOut())}
-      />
-      <WarningAutoSignOut
-        warningTime={warningTime}
-        expireTime={expireTime}
-      />
-    </div>
-  );
-};
-
 const SideBar = ({
   t, location,
 }) => {
@@ -100,7 +73,6 @@ const SideBar = ({
 
   return (
     <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
-      <AutoSignOutWrapper />
       <div className={`${styles.container} menu-items`}>
         {
           items.map((group, i) => (

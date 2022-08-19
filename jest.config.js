@@ -93,7 +93,6 @@ module.exports = {
     'src/components/shared/warnPunishedDelegate/index.js',
     'src/components/shared/warnPunishedDelegate/voteWarning.js',
     'src/components/toolbox/tabsContainer/tabsContainer.js',
-    'src/components/toolbox/copyToClipboard/index.js',
     'src/components/toolbox/dropdown/toolBoxDropdown.js',
     'src/components/toolbox/hardwareWalletIllustration/index.js',
     'src/components/toolbox/switcher/index.js',
@@ -124,7 +123,6 @@ module.exports = {
     'src/utils/theme.js',
     'src/utils/balanceChart.js', // This should be unskipped in issue #1499
     'src/utils/loading.js',
-    'src/utils/api/ws.js',
     'src/utils/account.js',
     'src/utils/datetime.js',
     'src/hooks/useServiceSocketUpdates.js',

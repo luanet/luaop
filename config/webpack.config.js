@@ -20,8 +20,6 @@ const config = {
       net: false,
       fs: false,
       os: false,
-      stream: require.resolve('stream-browserify'),
-      path: require.resolve('path-browserify'),
     },
   },
   externals: {
