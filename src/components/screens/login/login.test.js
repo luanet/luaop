@@ -4,7 +4,6 @@ import { mount } from 'enzyme';
 import { useDispatch } from 'react-redux';
 import { mountWithRouterAndStore } from '@utils/testHelpers';
 import { routes } from '@constants';
-import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import { settingsUpdated } from '@actions';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
@@ -149,7 +148,6 @@ describe('Login', () => {
         Login, props, {}, {
           settings: {
             enableCustomDerivationPath: false,
-            customDerivationPath: defaultDerivationPath,
           },
         },
       );
@@ -163,12 +161,10 @@ describe('Login', () => {
         Login, props, {}, {
           settings: {
             enableCustomDerivationPath: true,
-            customDerivationPath: defaultDerivationPath,
           },
         },
       );
 
-      expect(wrapper.find('.custom-derivation-path-input').at(1).props().value).toBe(defaultDerivationPath);
       wrapper.find('.custom-derivation-path-input').at(1).simulate('change', { target: { value: "m/44'/134'/1'" } });
       wrapper.update();
       expect(mockDispatch).toHaveBeenCalledWith(settingsUpdated({ customDerivationPath: "m/44'/134'/1'" }));

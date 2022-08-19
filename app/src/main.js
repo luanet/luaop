@@ -13,12 +13,10 @@ import updateChecker from './modules/autoUpdater';
 import server from '../server';
 import i18nSetup from '../../i18n/i18n-setup';
 import { storage, setConfig, readConfig } from './modules/storage';
-import { hwM } from './modules/hwManager';
 import { setupDaemon } from './daemon';
 import { setupTray } from './tray';
 
 setupDaemon({});
-hwM.listening();
 i18nSetup();
 
 const defaultServerPort = 5659;

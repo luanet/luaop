@@ -45,7 +45,6 @@ module.exports = {
     'app/src/ipc.js',
     'app/src/ledger.js',
     'app/src/utils.js',
-    'app/src/hwManager.js',
     'app/src/trezor.js',
     'app/src/modules/win.js',
     'app/src/modules/localeHandler.js',
@@ -125,8 +124,6 @@ module.exports = {
     'src/utils/theme.js',
     'src/utils/balanceChart.js', // This should be unskipped in issue #1499
     'src/utils/loading.js',
-    'src/utils/platform.js',
-    'src/utils/hwManager.js',
     'src/utils/api/ws.js',
     'src/utils/account.js',
     'src/utils/datetime.js',
