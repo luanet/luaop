@@ -4,7 +4,7 @@ import {
   timeOutId, timeOutWarningId,
 } from '@constants';
 import {
-  settingsUpdated, accountTokenUpdated,
+  settingsUpdated, accountTokenUpdated, accountLoggedOut,
 } from '@actions';
 import {
   token as getToken,
@@ -30,6 +30,11 @@ const accountMiddleware = store => next => async (action) => {
       setInStorage('accounts', {});
       break;
     case actionTypes.accountsRetrieved:
+      //TODO
+      if (action.data.expire_time >= Math.floor((new Date()).getTime() / 1000)) {
+        store.dispatch(accountLoggedOut());
+      }
+
       if (action.data.expire_time <= Math.floor((new Date()).getTime() / 1000) + 30) {
         const params = { id: action.data.info.id, refresh_token: action.data.refresh_token };
         const token = await getToken({ params });

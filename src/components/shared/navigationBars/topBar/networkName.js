@@ -4,13 +4,13 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './network.css';
 
 const Network = ({ network, t }) => {
-  const statusColor = network.online ? styles.online : styles.offline;
+  const statusColor = network.status === 2 ? styles.online : styles.offline;
 
   return (
     <section className={styles.wrapper}>
       <span className={`${styles.status} ${statusColor}`} />
       <div className={styles.message}>
-        <span>{t('Connected to:')}</span>
+        <span>{network.status === 2 ? t('Connected to:') : t('Disconnected:')}</span>
         <Tooltip
           className={styles.tooltipWrapper}
           size="maxContent"

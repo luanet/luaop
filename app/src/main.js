@@ -146,3 +146,7 @@ ipcMain.on('retrieveConfig', () => {
 ipcMain.on('updateQuitAndInstall', () => {
   autoUpdater.quitAndInstall();
 });
+
+ipcMain.on('ipfsd', (status) => {
+  win.browser.webContents.send('ipfsd', status)
+});

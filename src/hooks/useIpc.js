@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import htmlStringToReact from '@utils/htmlStringToReact';
 import { regex } from '@constants';
 import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '@utils/searchParams';
-import { appUpdateAvailable } from '@actions';
+import { appUpdateAvailable, networkStatusUpdated } from '@actions';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import NewReleaseMessage from '@shared/newReleaseMessage/newReleaseMessage';
 
@@ -15,6 +15,10 @@ const useIpc = (history) => {
   if (!ipc) return;
 
   useEffect(() => {
+    ipc.on('ipfsd', (action, status) => {
+      dispatch(networkStatusUpdated(status));
+    });
+
     ipc.on('update:available', (action, { version, releaseNotes }) => {
       const readMore = () => {
         addSearchParamsToUrl(history, { modal: 'newRelease' });

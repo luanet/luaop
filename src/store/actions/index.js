@@ -3,3 +3,4 @@ export * from './loading';
 export * from './settings';
 export * from './watchList';
 export * from './appUpdates';
+export * from './network';
