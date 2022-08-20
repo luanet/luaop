@@ -1,9 +1,8 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { routes, modals, account } from '@constants';
-import { accountLoggedOut } from '@actions';
+import { routes, modals } from '@constants';
 import Icon from '@toolbox/icon';
 import DialogLink from '@toolbox/dialog/link';
 import styles from './sideBar.css';
@@ -50,17 +49,6 @@ const MenuLink = ({
       <Inner data={data} pathname={pathname} sideBarExpanded={sideBarExpanded} />
     </NavLink>
   );
-};
-
-const getWarningTime = (expireTime) => {
-  if (!expireTime) {
-    return null;
-  }
-
-  const diff = account.lockDuration - account.warnLockDuration;
-  const expireTimeInMilliseconds = new Date(expireTime).getTime();
-
-  return new Date(expireTimeInMilliseconds - diff);
 };
 
 const SideBar = ({

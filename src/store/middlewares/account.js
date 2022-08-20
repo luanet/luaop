@@ -30,8 +30,7 @@ const accountMiddleware = store => next => async (action) => {
       setInStorage('accounts', {});
       break;
     case actionTypes.accountsRetrieved:
-      //TODO
-      if (action.data.expire_time >= Math.floor((new Date()).getTime() / 1000)) {
+      if (action.data.expire_time <= Math.floor((new Date()).getTime() / 1000)) {
         store.dispatch(accountLoggedOut());
       }
 

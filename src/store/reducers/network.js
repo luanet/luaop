@@ -1,7 +1,7 @@
 import { actionTypes } from '@constants';
 
 const initialState = {
-  status: 0
+  status: 0,
 };
 
 /**
