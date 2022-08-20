@@ -1,4 +1,5 @@
 import i18n from 'i18next';
+import log from 'electron-log';
 
 const getErrorMessage = (error) => {
   if (error.indexOf('404 Not Found') > -1 || error.indexOf('command is disabled') > -1) {
@@ -16,7 +17,8 @@ export default ({ // eslint-disable-line max-statements
     menuItem: { enabled: true },
   };
   autoUpdater.autoDownload = false;
-
+  autoUpdater.logger = log;
+  autoUpdater.logger.transports.file.level = 'debug';
   autoUpdater.checkForUpdatesAndNotify();
   setInterval(() => {
     autoUpdater.checkForUpdatesAndNotify();
@@ -24,9 +26,9 @@ export default ({ // eslint-disable-line max-statements
 
   autoUpdater.on('error', (error) => {
     // eslint-disable-next-line no-console
-    console.error('There was a problem updating the application');
+    log.error('There was a problem updating the application');
     // eslint-disable-next-line no-console
-    console.error(error);
+    log.error(error);
     if (updater.error !== error) {
       updater.error = error;
       const message = getErrorMessage(error ? error.toString() : '');
@@ -41,13 +43,14 @@ export default ({ // eslint-disable-line max-statements
     logMessage = `${logMessage} - Downloaded ${progressObj.percent}%`;
     logMessage = `${logMessage} (${progressObj.transferred}/${progressObj.total})`;
     // eslint-disable-next-line no-console
-    console.log(logMessage);
+    log.info(logMessage);
     if (win?.send) {
       win.send({ event: 'downloadUpdateProgress', value: progressObj });
     }
   });
 
   autoUpdater.on('update-available', ({ releaseNotes, version }) => {
+    log.info("update available")
     updater.error = undefined;
     const { ipcMain } = electron;
 
@@ -68,6 +71,7 @@ export default ({ // eslint-disable-line max-statements
   });
 
   autoUpdater.on('update-not-available', () => {
+    log.info("update not available")
     if (!updater.menuItem.enabled) {
       dialog.showMessageBox({
         title: i18n.t('No updates'),

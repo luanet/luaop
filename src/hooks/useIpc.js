@@ -15,7 +15,7 @@ const useIpc = (history) => {
   if (!ipc) return;
 
   useEffect(() => {
-    ipc.on('ipfsd', (action, status) => {
+    ipc.on('ipfsd', (action, { status }) => {
       dispatch(networkStatusUpdated(status));
     });
 

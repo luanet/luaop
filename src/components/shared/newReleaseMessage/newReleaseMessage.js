@@ -22,7 +22,7 @@ const NewReleaseMessage = ({
       <FlashMessage.Content>
         <div className={styles.container}>
           <Icon name="warningFolder" />
-          {t('Lisk {{version}}', { version })}
+          {t('Luanet {{version}}', { version })}
           {t(' is out. ')}
           {releaseSummary}
           <div className={styles.btnContainer}>

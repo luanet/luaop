@@ -146,5 +146,5 @@ ipcMain.on('updateQuitAndInstall', () => {
 });
 
 ipcMain.on('ipfsd', (status) => {
-  win.browser.webContents.send('ipfsd', status)
+  win.send({ event: 'ipfsd', value: { status: status } })
 });

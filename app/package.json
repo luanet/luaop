@@ -1,12 +1,12 @@
 {
-  "name": "lisk-desktop",
-  "version": "2.3.0-rc.1",
-  "productName": "Lisk",
-  "description": "Lisk",
+  "name": "luanet-desktop",
+  "version": "0.0.2",
+  "productName": "Luanet",
+  "description": "Luanet",
   "main": "./build/main.js",
   "author": {
-    "name": "Lisk Foundation",
-    "email": "admin@lisk.com"
+    "name": "Luanet Foundation",
+    "email": "admin@Luanet.io"
   },
   "dependencies": {
     "electron-log": "4.4.8",
