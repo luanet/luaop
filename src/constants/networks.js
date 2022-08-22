@@ -26,7 +26,7 @@ const networks = {
   },
   [networkKeys.api]: {
     label: 'Luanet API',
-    serviceUrl: 'http://127.0.0.1:9090',
+    serviceUrl: 'https://um.luanet.io',
   },
   [networkKeys.node]: {
     label: 'IPFS Node API',
