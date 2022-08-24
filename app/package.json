@@ -14,9 +14,6 @@
     "go-ipfs": "git+https://github.com/luanet/npm-go-ipfs.git#v0.0.1",
     "ipfs-http-client": "git+https://github.com/luanet/ipfs-http-client.git#v0.0.2",
     "ipfsd-ctl": "v10.0.6",
-    "multiaddr": "10.0.1",
-    "node-abi": "2.26.0",
-    "node-hid": "2.1.1",
-    "usb": "1.7.0"
+    "multiaddr": "10.0.1"
   }
 }

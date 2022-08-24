@@ -22,12 +22,6 @@ const config = {
       os: false,
     },
   },
-  externals: {
-    'node-hid': 'commonjs node-hid',
-    usb: 'commonjs usb',
-    bufferutil: 'bufferutil',
-    'utf-8-validate': 'utf-8-validate',
-  },
   module: {
     rules: [
       {
