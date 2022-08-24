@@ -22,10 +22,10 @@
     "build": "npm-run-all clean:build copy:files build:prod build:electron",
     "build:prod": "webpack --config ./config/webpack.config.prod",
     "build:electron": "webpack --config ./config/webpack.config.electron",
-    "dist": "electron-builder --ia32 --x64 --publish onTag",
-    "dist:win": "electron-builder --win --ia32 --x64 --publish onTag",
+    "dist": "electron-builder --publish onTag",
+    "dist:win": "electron-builder --win --publish onTag",
     "dist:mac": "electron-builder --mac --publish onTag",
-    "dist:linux": "electron-builder --linux --ia32 --x64 --publish onTag",
+    "dist:linux": "electron-builder --linux --publish onTag",
     "pack": "npm ci && npm run build && npm run clean:dist && npm run dist",
     "pack:win": "cmd /c npm ci && npm run install:electron:dependencies && npm run clean:build && npm run copy:files && npm run build:prod && npm run build:electron && npm run clean:dist && npm run dist:win",
     "test": "jest --config ./jest.config.js",
@@ -53,67 +53,6 @@
     "node-fetch": "^2.6.7",
     "braces": "^2.3.1",
     "postcss": "8.4.12"
-  },
-  "build": {
-    "asar": true,
-    "appId": "io.luanet.io",
-    "copyright": "Copyright © 2021-2022 Luanet",
-    "afterSign": "electron-builder-notarize",
-    "protocols": {
-      "name": "luanet",
-      "schemes": [
-        "luanet"
-      ]
-    },
-    "artifactName": "luanet-${os}-${arch}-${version}.${ext}",
-    "publish": [
-      "github"
-    ],
-    "linux": {
-      "target": [
-        "AppImage"
-      ],
-      "desktop": {
-        "MimeType": "application/luanet;x-scheme-handler/luanet"
-      },
-      "category": "Network"
-    },
-    "win": {
-      "target": "nsis"
-    },
-    "mac": {
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false,
-      "entitlements": "build/entitlements.plist",
-      "entitlementsInherit": "build/entitlements.plist",
-      "target": {
-        "target": "default",
-        "arch": [
-          "arm64",
-          "x64"
-        ]
-      }
-    },
-    "dmg": {
-      "background": "./build/background@2x.png",
-      "contents": [
-        {
-          "x": 584,
-          "y": 230,
-          "type": "link",
-          "path": "/Applications"
-        },
-        {
-          "x": 380,
-          "y": 232,
-          "type": "file"
-        }
-      ],
-      "window": {
-        "width": 660,
-        "height": 480
-      }
-    }
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true,

@@ -1,0 +1,58 @@
+productName: "Luanet Desktop"
+appId: "com.github.luanet.luaop"
+copyright: "Copyright © 2021-2022 Luanet"
+
+asar: true
+afterSign: 'electron-builder-notarize'
+artifactName: "luanet-${os}-${arch}-${version}.${ext}"
+mac:
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: "build/entitlements.plist"
+  entitlementsInherit: "build/entitlements.plist"
+  darkModeSupport: true
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+    - target: zip
+      arch: [x64, arm64]
+dmg:
+  background: "./build/background@2x.png"
+  window:
+    width: 660
+    height: 400
+  contents:
+    - x: 410
+      y: 240
+      type: "link"
+      path: "/Applications"
+    - x: 130
+      y: 240
+      type: "file"
+
+win:
+  target:
+    - target: "nsis"
+      arch: [ia32, x64]
+    - target: "zip"
+      arch: [ia32, x64]
+  requestedExecutionLevel: "asInvoker"
+
+nsis:
+  perMachine: false
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+
+linux:
+  executableArgs:
+    - --no-sandbox
+  description: "Luanet desktop application."
+  maintainer: "Luanet Contributors"
+  category: "Network;FileTransfer;P2P"
+  target:
+    - target: "AppImage"
+      arch: [ia32, x64, arm64]
+    - target: "deb"
+      arch: [ia32, x64, arm64]
+    - target: "rpm"
+      arch: [ia32, x64, arm64]
