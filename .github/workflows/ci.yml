@@ -81,7 +81,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dist-${{ matrix.os }}
-          path: dist/*esktop*.*
+          path: dist/luanet-*.*
           if-no-files-found: error
 
       - name: Show Cache
