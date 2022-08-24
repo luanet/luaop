@@ -53,6 +53,6 @@ linux:
     - target: "AppImage"
       arch: [ia32, x64, arm64]
     - target: "deb"
-      arch: [ia32, x64, arm64]
+      arch: [ia32, x64]
     - target: "rpm"
-      arch: [ia32, x64, arm64]
+      arch: [ia32, x64]
