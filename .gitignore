@@ -6,6 +6,7 @@ src/.nyc_output
 coverage
 app/report.html
 app/*.map
+app/go-ipfs
 app/build
 app/build-testnet
 *.sw[pon]

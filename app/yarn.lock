@@ -461,9 +461,9 @@
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
 "@types/node@*":
-  version "18.7.11"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.11.tgz#486e72cfccde88da24e1f23ff1b7d8bfb64e6250"
-  integrity sha512-KZhFpSLlmK/sdocfSAjqPETTMd0ug6HIMIAwkwUpU79olnZdQtMxpQP+G1wDzCH7na+FltSIhbaZuKdwZ8RDrw==
+  version "18.7.13"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.13.tgz#23e6c5168333480d454243378b69e861ab5c011a"
+  integrity sha512-46yIhxSe5xEaJZXWdIBP7GU4HDTG8/eo0qd9atdiL+lFpA03y8KS+lkTN834TWJj5767GbWv4n/P6efyTFt1Dw==
 
 "@types/node@>=13.7.0":
   version "18.7.3"
@@ -783,12 +783,12 @@ get-stream@^6.0.0:
   resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-6.0.1.tgz#a262d8eef67aced57c2852ad6167526a43cbf7b7"
   integrity sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==
 
-go-ipfs@0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/go-ipfs/-/go-ipfs-0.14.0.tgz#bfb4ed8dca0d311a35fc749e021949ee969440a3"
-  integrity sha512-2UQv5zZNzB/a0j3jjK2C9bioS0gp+2NJStXs6Cc/ZmRSTTGjhagEYGGHXSe5vfUz0v0Qt7aHcjDEQ/9QL4w8Cw==
+"go-ipfs@git+https://github.com/luanet/npm-go-ipfs.git#develop":
+  version "0.15.0-rc1"
+  resolved "git+https://github.com/luanet/npm-go-ipfs.git#e16d6180bbd00dee508a5cbb2894aeba77dcc8aa"
   dependencies:
     cachedir "^2.3.0"
+    electron-log "4.4.8"
     got "^11.7.0"
     gunzip-maybe "^1.4.2"
     hasha "^5.2.2"

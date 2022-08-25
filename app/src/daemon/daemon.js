@@ -3,8 +3,8 @@ import i18n from 'i18next'
 import { showDialog } from '../dialogs'
 import { applyDefaults, migrateConfig, checkPorts, configExists, checkValidConfig, rmApiFile, apiFileExists } from './config'
 import * as ipfsHttpModule from 'ipfs-http-client'
-import { path } from 'go-ipfs'
 import log from 'electron-log'
+import { path as ipfsPath } from 'go-ipfs'
 
 function cannotConnectDialog (addr) {
   showDialog({
@@ -17,22 +17,14 @@ function cannotConnectDialog (addr) {
   })
 }
 
-function getIpfsBinPath () {
-  try {
-    return path().replace('app.asar', 'app.asar.unpacked')
-  } catch (e) {
-    log.info(`error: ${e}`)
-  }
-}
-
-async function spawn ({ flags, path }) {
-  const ipfsBin = getIpfsBinPath()
-  log.info(`ipfs bin path: ${ipfsBin}`)
+async function spawn ({ flags, repo }) {
+  const ipfsBin = ipfsPath();
+  log.info(`ipfs bin path: ${ipfsBin}`);
   const ipfsd = await createController({
     ipfsHttpModule,
     ipfsBin,
     ipfsOptions: {
-      repo: path
+      repo: repo
     },
     remote: false,
     disposable: false,

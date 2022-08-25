@@ -3,8 +3,14 @@ appId: "com.github.luanet.luaop"
 copyright: "Copyright © 2021-2022 Luanet"
 
 asar: true
+beforeBuild: "./app/go-ipfs.js"
 afterSign: 'electron-builder-notarize'
 artifactName: "luanet-${os}-${arch}-${version}.${ext}"
+extraFiles:
+  from: "app/go-ipfs"
+  to: "Resources/bin"
+  filter: "**/*"
+
 mac:
   hardenedRuntime: true
   gatekeeperAssess: false
@@ -13,8 +19,6 @@ mac:
   darkModeSupport: true
   target:
     - target: dmg
-      arch: [x64, arm64]
-    - target: zip
       arch: [x64, arm64]
 dmg:
   background: "./build/background@2x.png"
