@@ -11,7 +11,7 @@
   "dependencies": {
     "electron-log": "4.4.8",
     "get-port": "5.1.1",
-    "go-ipfs": "git+https://github.com/luanet/npm-go-ipfs.git#develop",
+    "go-ipfs": "git+https://github.com/luanet/npm-go-ipfs.git#v0.0.2",
     "ipfs-http-client": "git+https://github.com/luanet/ipfs-http-client.git#v0.0.2",
     "ipfsd-ctl": "v10.0.6",
     "multiaddr": "10.0.1"
