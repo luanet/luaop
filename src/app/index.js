@@ -13,7 +13,9 @@ import NotFound from '@shared/notFound';
 import { routes } from '@constants';
 import NavigationBars from '@shared/navigationBars';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import { Web3ReactProvider } from '@web3-react/core';
 import DialogHolder from '@toolbox/dialog/holder';
+import { ethers } from 'ethers';
 import {
   settingsRetrieved,
   getAccountInfos,
@@ -26,6 +28,12 @@ import useIpc from '../hooks/useIpc';
 
 // eslint-disable-next-line max-statements
 const App = ({ history }) => {
+  const getLibrary = (provider) => {
+    const library = new ethers.providers.Web3Provider(provider);
+    library.pollingInterval = 8000; // frequency provider is polling
+    return library;
+  };
+
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
@@ -43,50 +51,52 @@ const App = ({ history }) => {
   const routeObj = Object.values(routes).find(r => r.path === history.location.pathname) || {};
 
   return (
-    <ThemeContext.Provider value={theme}>
-      <OfflineWrapper>
-        <DialogHolder history={history} />
-        <ToastContainer
-          position="bottom-right"
-          hideProgressBar
-          draggable
-          newestOnTop
-          closeButton={false}
-          className={styles.toastContainer}
-          toastClassName={styles.toastBody}
-          bodyClassName={styles.toastText}
-        />
-        <NavigationBars
-          isSignInFlow={routeObj.isSigninFlow}
-          location={history.location}
-          history={history}
-        />
-        <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
-          <section className="scrollContainer">
-            <FlashMessageHolder />
-            <div className={`${styles.mainContent} ${styles.mainBox}`}>
-              <Switch>
-                {
-                  routesList.map(route => (
-                    <CustomRoute
-                      key={routes[route].path}
-                      route={routes[route]}
-                      path={routes[route].path}
-                      exact={routes[route].exact}
-                      isPrivate={routes[route].isPrivate}
-                      forbiddenTokens={routes[route].forbiddenTokens}
-                      component={routesMap[route]}
-                      history={history}
-                    />
-                  ))
-                }
-                <Route path="*" component={NotFound} />
-              </Switch>
-            </div>
-          </section>
-        </main>
-      </OfflineWrapper>
-    </ThemeContext.Provider>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <ThemeContext.Provider value={theme}>
+        <OfflineWrapper>
+          <DialogHolder history={history} />
+          <ToastContainer
+            position="bottom-right"
+            hideProgressBar
+            draggable
+            newestOnTop
+            closeButton={false}
+            className={styles.toastContainer}
+            toastClassName={styles.toastBody}
+            bodyClassName={styles.toastText}
+          />
+          <NavigationBars
+            isSignInFlow={routeObj.isSigninFlow}
+            location={history.location}
+            history={history}
+          />
+          <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
+            <section className="scrollContainer">
+              <FlashMessageHolder />
+              <div className={`${styles.mainContent} ${styles.mainBox}`}>
+                <Switch>
+                  {
+                    routesList.map(route => (
+                      <CustomRoute
+                        key={routes[route].path}
+                        route={routes[route]}
+                        path={routes[route].path}
+                        exact={routes[route].exact}
+                        isPrivate={routes[route].isPrivate}
+                        forbiddenTokens={routes[route].forbiddenTokens}
+                        component={routesMap[route]}
+                        history={history}
+                      />
+                    ))
+                  }
+                  <Route path="*" component={NotFound} />
+                </Switch>
+              </div>
+            </section>
+          </main>
+        </OfflineWrapper>
+      </ThemeContext.Provider>
+    </Web3ReactProvider>
   );
 };
 

@@ -1,6 +1,4 @@
 import React from 'react';
-
-import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './network.css';
 
 const Network = ({ network, t }) => {
@@ -10,17 +8,7 @@ const Network = ({ network, t }) => {
     <section className={styles.wrapper}>
       <span className={`${styles.status} ${statusColor}`} />
       <div className={styles.message}>
-        <span>{network.status === 2 ? t('Connected to:') : t('Disconnected:')}</span>
-        <Tooltip
-          className={styles.tooltipWrapper}
-          size="maxContent"
-          position="bottom left"
-          content={(
-            <span className="network-name">{t('Mainnet').toLowerCase()}</span>
-          )}
-        >
-          <p className="network-address">-</p>
-        </Tooltip>
+        <span>{network.status === 2 ? t('Connected') : t('Disconnected')}</span>
       </div>
     </section>
   );

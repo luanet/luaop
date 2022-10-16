@@ -31,8 +31,8 @@
   "Confirm OTP Failed": "Confirm OTP Failed",
   "Confirm Password": "Confirm Password",
   "Confirm your OTP": "Confirm your OTP",
+  "Connected": "Connected",
   "Connected peers": "Connected peers",
-  "Connected to:": "Connected to:",
   "Continue": "Continue",
   "Continue to sign in": "Continue to sign in",
   "Copy": "Copy",
@@ -52,7 +52,7 @@
   "Delegate #{{rank}}": "Delegate #{{rank}}",
   "Disable dark mode": "Disable dark mode",
   "Disable discreet mode": "Disable discreet mode",
-  "Disconnected:": "Disconnected:",
+  "Disconnected": "Disconnected",
   "Discord": "Discord",
   "Discreet mode": "Discreet mode",
   "Don’t have an account yet? ": "Don’t have an account yet? ",
@@ -114,7 +114,6 @@
   "MMM DD YYYY hh:mm:ss": "MMM DD YYYY hh:mm:ss",
   "MMM DD YYYY hh[h]": "MMM DD YYYY hh[h]",
   "MMM YYYY": "MMM YYYY",
-  "Mainnet": "Mainnet",
   "Max": "Max",
   "Max amount must be greater than Min amount": "Max amount must be greater than Min amount",
   "Min": "Min",
@@ -259,6 +258,5 @@
   "selectDirectory": "selectDirectory",
   "start": "start",
   "to": "to",
-  "{{passphraseName}} paper wallet": "{{passphraseName}} paper wallet",
-  "{{token}} balance": "{{token}} balance"
+  "{{passphraseName}} paper wallet": "{{passphraseName}} paper wallet"
 }
