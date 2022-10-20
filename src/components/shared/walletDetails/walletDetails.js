@@ -8,10 +8,9 @@ import BoxContent from '@toolbox/box/content';
 import BoxRow from '@toolbox/box/row';
 import Icon from '@toolbox/icon';
 import { PrimaryButton } from '@toolbox/buttons';
-import Converter from '@shared/converter';
-import { fromRawLsk } from '@utils/lsk';
 import { selectActiveToken } from '@store/selectors';
 import { useWeb3React } from '@web3-react/core';
+import { getClaimData, submitClaimTx } from '@api/payout/claim';
 import walletlink from './connectors';
 import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
@@ -27,13 +26,14 @@ const WalletDetails = ({
     active,
   } = useWeb3React();
   const token = selectActiveToken();
-  // TODO: Disconnect account
   const claim = async () => {
     if (!library) return;
+    const data = await getClaimData({ accessToken: accountInfo.access_token, address: account });
     const tx = {
-      to: '0x9b86168926bf73D69514955B9d09c083Bc39FE6d',
+      to: '0x70bd651f368e1b2dd75f959eefc2e574Af434Ed6', // testnet
       from: account,
-      value: '0x38D7EA4C68000',
+      value: '0x0',
+      data: data.input,
     };
 
     try {
@@ -42,6 +42,7 @@ const WalletDetails = ({
         params: [tx],
       });
 
+      await submitClaimTx({ accessToken: accountInfo.access_token, tx: hash });
       const msg = i18next.t(`Claim success, transaction hash: ${hash}`);
       toast.info(msg);
     } catch (error) {
@@ -72,7 +73,7 @@ const WalletDetails = ({
       </BoxHeader>
       <BoxContent className={`${styles.container} coin-container`}>
         <BoxRow
-          key={`${accountInfo.address}-${token}`}
+          key={`${accountInfo.info.address}-${token}`}
           className={`${styles.row} coin-row`}
         >
           <Link
@@ -88,19 +89,23 @@ const WalletDetails = ({
           >
             <Icon name="walletIconActive" />
             <div className={styles.details}>
-              <span>
-                {t('Balance', { token })}
+              <span className={styles.valuesRow}>
+                <DiscreetMode>
+                  <div className={`${styles.cryptoValue}`}>
+                    <div>{t('Balance', { token })}</div>
+                    <div className={`${styles.wrapper}`}>{t('Unclaimed Balance', { token })}</div>
+                  </div>
+                </DiscreetMode>
               </span>
               <div className={styles.valuesRow}>
                 <DiscreetMode>
                   <div className={`${styles.cryptoValue} balance-value`}>
-                    <div><LiskAmount val={accountInfo.balance} token={token} /></div>
-                    <div>
-                      <Converter
-                        className={styles.fiatValue}
-                        value={fromRawLsk(accountInfo.balance)}
-                        error=""
-                      />
+                    <div><LiskAmount val={accountInfo.info.balance} token={token} /></div>
+                    <div className={`${styles.wrapper} ${styles.fiatValue}`}>
+                      <span className={`${styles.price} converted-price`}>
+                        {(accountInfo.info.lock_balance + accountInfo.info.balance) / 1e6}
+                        {' LUA'}
+                      </span>
                     </div>
                     <div className={`${styles.balanceClaim} balance-claim`}>
                       {!active ? (

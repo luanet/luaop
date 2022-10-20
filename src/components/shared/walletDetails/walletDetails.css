@@ -119,6 +119,20 @@
   }
 }
 
+.wrapper {
+  @mixin contentNormal;
+
+  color: var(--color-blue-gray) !important;
+  display: flex;
+
+  & .price {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: right;
+  }
+}
+
 .link:link,
 .link:visited,
 .link:hover,
