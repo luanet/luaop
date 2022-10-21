@@ -99,7 +99,7 @@ export default compose(
       autoload: true,
       transformResponse: (response, oldData, urlSearchParams) => (
         urlSearchParams.offset
-          ? { items: [...oldData.data.items, ...response.data.items], meta: response.meta }
+          ? { items: [...oldData.items, ...response.items], meta: response.meta }
           : response
       ),
     },

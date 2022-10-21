@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { toast } from 'react-toastify';
 import { actionTypes } from '@constants';
-import { login as loginAccount } from '@api/account/luanet';
+import { login as loginAccount, token as getAccessToken } from '@api/account/luanet';
 import { getConnectionErrorMessage } from '@utils/getNetwork';
 import { getFromStorage } from '@utils/localJSONStorage';
 
@@ -11,12 +11,28 @@ import { getFromStorage } from '@utils/localJSONStorage';
  */
 export const getAccountInfos = () => (dispatch) => {
   getFromStorage('accounts', {}, (data) => {
-    dispatch({
-      type: actionTypes.accountsRetrieved,
-      data: {
-        ...data,
-      },
-    });
+    const expire = Math.floor((new Date()).getTime() / 1000) + 30;
+    if (data.expire_time == null || data.expire_time <= expire) {
+      getAccessToken({
+        params: { id: data.info.id, refresh_token: data.refresh_token },
+      }).then((token) => {
+        data.access_token = token.access_token;
+        data.expire_time = token.expire_time;
+        dispatch({
+          type: actionTypes.accountsRetrieved,
+          data: {
+            ...data,
+          },
+        });
+      });
+    } else {
+      dispatch({
+        type: actionTypes.accountsRetrieved,
+        data: {
+          ...data,
+        },
+      });
+    }
   });
 };
 

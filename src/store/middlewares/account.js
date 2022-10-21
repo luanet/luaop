@@ -4,12 +4,10 @@ import {
   timeOutId, timeOutWarningId,
 } from '@constants';
 import {
-  settingsUpdated, accountTokenUpdated, accountLoggedOut,
+  settingsUpdated, accountTokenUpdated,
 } from '@actions';
-import {
-  token as getToken,
-} from '@api/account/luanet';
-import { setInStorage, getFromStorage } from '@utils/localJSONStorage';
+
+import { setInStorage } from '@utils/localJSONStorage';
 
 // eslint-disable-next-line complexity
 const accountMiddleware = store => next => async (action) => {
@@ -30,21 +28,8 @@ const accountMiddleware = store => next => async (action) => {
       setInStorage('accounts', {});
       break;
     case actionTypes.accountsRetrieved:
-      if (action.data.expire_time <= Math.floor((new Date()).getTime() / 1000)) {
-        store.dispatch(accountLoggedOut());
-      }
-
-      if (action.data.expire_time <= Math.floor((new Date()).getTime() / 1000) + 30) {
-        const params = { id: action.data.info.id, refresh_token: action.data.refresh_token };
-        const token = await getToken({ params });
-        getFromStorage('accounts', {}, (data) => {
-          data.access_token = token.access_token;
-          data.expire_time = token.expire_time;
-          setInStorage('accounts', data);
-        });
-
-        store.dispatch(accountTokenUpdated(token));
-      }
+      setInStorage('accounts', action.data);
+      store.dispatch(accountTokenUpdated(action.data));
       break;
     default: break;
   }
